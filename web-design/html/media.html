@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>freeCodeCamp</title>
+	</head>
+	<body>
+		<!--
+			<audio> 元素可以向页面添加音频内容, 支持常见的音频格式如 mp3,wav,ogg
+			<video> 元素可以向页面添加视频内容，支持常见的视频格式如 mp4,ogg,webm
+		-->
+		<!-- 不带 controls, 页面没有任何内容显示 -->
+		<audio src="https://cdn.freecodecamp.org/curriculum/js-music-player/cruising-for-a-musing.mp3"></audio>
+		<!-- 带上 controls 属性, 可以在页面上显示音频播放器 
+			controls 属性允许用户管理音频播放，包括暂停或恢复播放
+			注意： 某些浏览器（例如 Safari）即使存在 controls 属性，默认情况下也可能不显示音量控制。
+			还有一些其他属性可以增强 audio 功能，比如 loop 属性会循环播放, muted 以静音状态启动
+		-->
+		<audio src="https://cdn.freecodecamp.org/curriculum/js-music-player/cruising-for-a-musing.mp3" controls></audio>
+
+		<!-- 对于不同文件类型的音频文件，不同浏览器的支持不同，我们可以提供多个，让浏览器自己选择第一个能够识别的源 -->
+		<audio controls>
+		  <source src="audio.ogg" type="audio/ogg" />
+		  <source src="audio.wav" type="audio/wav" />
+		  <source src="audio.mp3" type="audio/mpeg" />
+		</audio>
+
+		<!-- poster 属性指定在视频下载时显示一张图片 -->
+		<video
+		  src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
+		  loop
+		  controls
+		  muted
+		  poster="https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217"
+		  width="400"
+		></video>
+
+		<!-- 设置多个视频源，让浏览器选择能够识别的第一个进行播放 -->
+		<video
+		  controls
+		  width="400"
+		  poster="https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217"
+		>
+		  <source
+			src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
+			type="video/mp4"
+		  />
+		  <source
+			src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.webm"
+			type="video/webm"
+		  />
+		  Your browser does not support the video tag.
+		</video>
+	</body>
+</html>
