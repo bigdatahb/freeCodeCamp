@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>freeCodeCamp</title>
+	</head>
+	<body>
+		<!--
+			<iframe> 可以让您将外部网站嵌入到你自己的网页中
+			iframe 最常见的用途是将地图嵌入页面
+		-->
+		<iframe width="400" height="200" src="https://www.bilibili.com/video/BV1EAMe6mEoS/?spm_id_from=333.1007.tianma.2-3-6.click&vd_source=edc4dfddf21720e826c2e714ceb99efb" allowfullscreen></iframe>
+		<!-- 嵌入地图 -->
+		<iframe
+  			title="Map of the Royal Observatory, Greenwich, London"
+  			width="300"
+  			height="200"
+			src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&amp;layer=mapnik">
+		</iframe>
+
+
+		<!--
+			被替换的元素（A replaced element）是指其内容由外部资源而非 CSS 本身决定的元素
+			<img> <iframe> 都是被替换的元素
+			<input type="image"> 也是， 注意只有 type="image" 的 input 才是
+		-->
+		<input type="image" alt="Tian tan Buddha" src="https://lh3.googleusercontent.com/grass-cs/ACvplmPOLyvK3dSr1aNR8xIRKVLCBvZAyzYp5hyZ-biu5xltZEIId0Bkv0qUfhtxOTqBsTPOaxwemReGVcqam1ADT7UAVqgc4KqdoX7OT9eFl3bqFeU69lcG-OA2bB-BBAO0UC7HlvD473tRHOI=w270-h312-n-k-no">
+
+
+		<!--
+			深入使用 iframe
+			width 和 height 指定 iframe 尺寸
+			src 指定要嵌入的页面的 URL
+			allowfullscreen 属性允许用户以全屏模式显示 iframe
+			指定 title 属性是一个好习惯, 它对无障碍性网页很重要
+			allow 属性指定了允许对 iframe 执行的操作，可以用逗号或者分号进行分隔
+
+		-->
+
+		<iframe
+		  width="400"
+		  height="400"
+		  src="https://www.bilibili.com/video/BV1iHtozkEWx/?spm_id_from=333.337.search-card.all.click"
+		  title="Learn JavaScript - Full Course for Beginners (YouTube video)"
+		  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+		  referrerpolicy="strict-origin-when-cross-origin"
+		  allowfullscreen
+		></iframe>
+
+		<h1>A Map from Openstreetmap.org Embedded with the iframe Element</h1>
+
+		<iframe
+		  width="425"
+		  height="350"
+		  src="https://www.openstreetmap.org/export/embed.html?bbox=3.006134033203125%2C6.150112578753815%2C3.6357879638671875%2C6.749850810550778&amp;layer=mapnik"
+		  title="Map of Lagos area, Nigeria"
+		  style="border: 1px solid black"
+		>
+		</iframe>
+		<br />
+		<small>
+		  <a href="https://www.openstreetmap.org/#map=11/6.4501/3.3210">
+			View Larger Map
+		  </a>
+		</small>
+		
+		<!-- 如果要将直接 HTML 嵌入到 iframe 元素中，则必须使用 srcdoc 属性而不是 src  -->
+	</body>
+</html>
