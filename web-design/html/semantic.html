@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>freeCodeCamp</title>
+	</head>
+	<body>
+		<!-- 
+			大多数 HTML 元素都具有语义，例如 <p> 的语义就是一段文本，<div> 是少数没有语义的元素之一
+
+			为什么要使用语义化HTML？
+			1. 使用规范的语义化 HTML 能确保屏幕阅读器等辅助技术用户获得最佳体验
+			2. 语义化 HTML 还能提升您的搜索排名。这被称为搜索引擎优化，或简称 SEO。
+			3. 正确使用语义元素可以提升你的开发体验
+
+			语义化HTML除了要使用语义化元素之外，还要求拥有正确的结构层级
+		-->
+
+		<header>
+			<nav>
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+			</nav>
+		</header>
+ 		<main>
+			<h1>HTML 语义元素</h1>
+			<p>使用 HTML 语义元素很重要，它不仅能提升我们的开发体验，更重要的是无障碍体验和SEO，搜索引擎能够通过语义元素看懂我们的文档结构</p>
+			<h2>常用的语义元素</h2>
+			<p>语义化（semantic）HTML侧重内容结构，表现型（presentational）HTML侧重外观。常用的语义化HTML元素有：&lt;main&gt;, &lt;header&gt;, &lt;footer&gt;, &lt;section&gt;, &lt;article&gt;, &lt;aside&gt;, &lt;nav&gt;等</p>
+			<section></section>
+			<section>
+				<figure></figure>
+			</section>
+			
+			<h2>&lt;em&gt;, &lt;strong&gt; and &lt;dl&gt;</h2>
+			<p><em>em</em> 和 <strong>strong</strong> 除了特定样式外，还着重强调文本的重要性（语义）</p>
+			<p>description list 适合呈现键值对形式的相关信息</p>
+			<section>
+				<!-- 使用 dl 定义描述列表, description list
+					dt 表示 term, dd 表示 definition 
+				-->
+				<dl>
+				  <dt>HTML</dt>
+				  <dd>HyperText Markup Language</dd>
+				  <dt>CSS</dt>
+				  <dd>Cascading Style Sheets</dd>
+				  <dt>JS</dt>
+				  <dd>JavaScript</dd> 
+				</dl>
+
+				<dl>
+				  <dt>Flour</dt>
+				  <dd>2 cups</dd>
+				  <dt>Sugar</dt>
+				  <dd>1/2 cup</dd>
+				  <dt>Vegetable Oil</dt>
+				  <dd>2 tablespoons</dd> 
+				</dl>
+			</section>
+
+			<!--
+				文本、时间相关的语义元素
+			-->
+			<h2>文本、时间相关的语义元素</h2>
+			<!-- 1. 引用块 quote block -->
+			<h3>blockquote</h3>
+			<section>
+				<!-- 您可以使用 cite 属性进行引用。此属性的值必须是有效的 URL -->
+				<blockquote cite="https://www.freecodecamp.org/news/learn-to-code-book/">
+					"Can you imagine what it would be like to be a successful developer? To have built software systems that people rely upon?"
+				</blockquote>
+
+				<!-- 在同一个引用块中包含多个文本内容 -->
+				<blockquote cite="https://www.freecodecamp.org/news/learn-to-code-book/">
+				  <p>Build your projects. Show them to your friends. Build projects for your friends.</p>
+				  <p>Build your network. Help the people you meet along the way. What goes around comes around. You'll get what's coming to you.</p>   
+				  <p>It is not too late. Life is long.</p>
+				  <p>You will look back on this moment years from now and be glad you made a move.</p>
+				</blockquote>
+
+
+				<div>
+				  <blockquote cite="https://www.freecodecamp.org/news/learn-to-code-book/">
+					Can you imagine what it would be like to be a successful developer? To have built software systems that people rely upon?
+				  </blockquote>
+				  <p>—Quincy Larson, <cite>How to Learn to Code and Get a Developer Job [Full Book].</cite></p>
+				</div>
+			</section>
+
+			<!-- 2. 缩略词 -->
+			<h3>缩略词: abbr</h3>
+			<section>
+				<p><abbr title="HyperText Markup Language">HTML</abbr> is the foundation of the web.</p>
+			</section>
+
+			<!-- 3. 地址 -->
+			<h3>地址: address</h3>
+			<section>
+				<address>
+				  <h2>Company Name</h2>
+				  <p>
+					1234 Elm Street<br />
+					Springfield, IL 62701<br />
+					United States
+				  </p>
+				  <p>Phone: <a href="tel:+15555555555">+1 (555) 555-5555</a></p>
+				  <!-- 使用 mailto 可能会被判定为垃圾邮件，因为很多垃圾邮件发送者会使用这种方式来发送邮件 -->
+				  <p>Email: <a href="mailto:contact@company.com">contact@company.com</a></p>
+				</address>
+			</section>
+
+			<!-- 4. 日期时间相关的语义元素 -->
+			<h3>time</h3>
+			<p>datetime 属性值采用 ISO 8601 标准, 其格式为 <em>yyyy-MM-ddTHH:mm:ss</em></p>
+			<section>
+				<p>The reservations are for <time datetime="20:00">20:00 </time></p>
+				<p>The graduation will be on <time datetime="2024-06-15T15:00">June 15</time></p>
+			</section>
+		</main>
+		<footer></footer>
+
+		<!-- 还有 article, aside 等语义元素 -->
+	</body>
+</html>
