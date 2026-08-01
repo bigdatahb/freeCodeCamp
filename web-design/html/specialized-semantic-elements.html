@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>freeCodeCamp</title>
+	</head>
+	<body>
+		<main>
+			<h1>HTML 中的特殊公式表示 </h1>
+			<h2>在 HTML 中显示数学和化学公式</h2>
+			<!-- 在 HTML 中显示数学和化学公式 -->
+			<section id="math">
+				<p>2<sup>2</sup> (2 squared) is 4.</p>
+				<p>
+				  Monseigneur is often written as <strong>M<sup>gr</sup></strong>.
+				</p>
+			</section>
+			<section id="chemistry">
+				<p>CO<sub>2</sub></p>
+			</section>
+			
+			<h2>在 HTML 显示计算机代码</h2>
+			<section id="code">
+				<!-- 行内代码片段 -->
+				<p>使用 &lt;code&gt; 可以在文本中插入行内代码片段:</p>
+				<p>
+				  To set the text color to blue in CSS, use the following code:
+				  <code>color: blue;</code>
+				</p>
+				<p>如果需要表示多行代码，需要将 code 元素置于预格式化文本元素内:</p>
+				<pre>
+					<code>
+						body {
+							color: red;
+						}
+					</code>
+				</pre>
+				<p>将 &lt;code&gt; 放置于 &lt;pre&gt; 元素内</p>
+			</section>
+			<h2>&lt;u&gt;, &lt;s&gt; and &lt;ruby&gt;</h2>
+			<p>u 元素表示应用了非文本注释的行内文本</p>
+			<p>
+			  You can use the unarticulated annotation element to highlight
+			  <u>inccccort</u> <u>spling</u> <u>issses</u>.
+			</p>
+			<p>s 元素为文本添加删除线，表示文本不再准确或者相关</p>
+			<p><s>Tomorrow's hike will be meeting at noon.</s></p>
+
+			<p>Due to unforeseen weather conditions, the hike has been canceled.</p>
+			<p>ruby 元素常用于东南亚拼音排版，表示显示在正文上方或下方的短文本</p>
+			<ruby> 明日 <rp>(</rp><rt>Ashita</rt><rp>)</rp> </ruby>
+		</main>
+	</body>
+</html>
