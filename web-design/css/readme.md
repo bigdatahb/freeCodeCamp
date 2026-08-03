@@ -198,6 +198,8 @@ CSS 组合器用于定义 CSS 选择器之间的关系，它主要通过元素�
 
     `#container ~ span` 选择的目标是所有出现在 `#container` 元素之后的兄弟节点中的 `span` 元素
 
+**组合器也叫做复合选择器**
+
 ### inline, block, inline-block
 
 元素主要分为 **块级元素** 和 **行内元素**， 块元素的显示方式是: `display: block;`, 行内元素是: `display: inline;`
@@ -261,3 +263,73 @@ padding 表示元素的内边距，即元素内容与其边框之间的距离
         margin: 10px 20px 30px 40px;
     }
     ```
+
+### CSS 优先级
+
+CSS 优先级是一个很重要的概念，当同时有多个规则定位到同一个元素时，到底适配哪个 CSS 规则？
+
+首先看一般的优先级规则：
+
+- 内联样式具有最高的优先级（如果不考虑使用 `!important` 的话）
+
+- 内部样式和外部样式具有同样的优先级
+
+- 优先级相同的情况下，后面的会覆盖前面的
+
+对于选择器的优先级：
+
+- **ID 选择器 &gt; 类选择器、属性选择器、伪类 &gt; 类型选择器（标签选择器）、伪元素 &gt; 通用选择器**
+
+优先级值的计算分为 4 个部分: (a, b, c, d)
+
+- `a`: 内联样式 1 或 0
+
+- `b`: ID 选择器数量
+
+- `c`: 类选择器、属性选择器和伪类（`:hover`、`:nth-child` 等）的数量
+
+- `d`: 类型选择器、伪元素（`::before`、`::after` 等）的数量
+
+- 通用选择器 `*`、组合器（`+` `>` `~` `空格`）和 `:where()` 不贡献任何权重，即 (0,0,0,0)
+
+对于如下 css 规则:
+
+```css
+div#test span {
+    color: green;
+}
+div span {
+    color: blue;
+}
+span {
+    color: red;
+}
+```
+
+`div#test span` 的优先级是 (0, 1, 0, 2)
+
+`div span` 的优先级是 (0, 0, 0, 2)
+
+`span` 的优先级是 (0, 0, 0, 1)
+
+### 继承
+
+继承是 CSS 中的一个关键概念，它决定了样式如何从父元素传递到子元素。
+
+在 CSS 中，并非所有属性都会默认继承。例如， `color` 、 `font-family` 和 `line-height` 等属性是会继承的。
+
+另一方面，像 `margin` 、 `padding` 、 `border` 和 `background` 这样的属性默认情况下不会被继承。如果您希望子元素继承这些样式，则需要显式地设置它们，可以直接在子元素上设置，也可以使用 **inherit** 关键字。
+
+`inherit` 关键字可用于强制从父元素继承属性，即使该属性通常不会被继承。
+
+```html
+<div style="padding: 20px;">
+    This is the parent element with padding.
+    <!-- 让 p 继承 div 的 padding 属性-->
+    <p style="padding: inherit;">
+        This is the child element inheriting the padding.
+    </p>
+</div>
+```
+
+需要注意的是，**继承是单向的**，只能从父元素继承到子元素。如果您覆盖子元素的样式，则不会影响父元素。
