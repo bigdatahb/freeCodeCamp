@@ -1,0 +1,51 @@
+.business-card {
+  background-color: #9CAF88;
+  width: 300px;
+  padding: 20px;
+  margin-top: 100px;
+  text-align: center;
+  font-size: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+  background-color: rosybrown;
+  font-family: Arial, sans-serif;
+}
+
+.profile-image {
+  max-width: 100%;
+}
+
+p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  color: grey;
+}
+a:hover {
+  color: brown;
+}
+a:active {
+  color: white;
+}
+hr {
+  height: 1px;
+  background-color: rosybrown;
+  border-color: rosybrown;
+}
+
+.full-name {
+  font-family: "Segoe UI";
+  font-weight: 500;
+  margin-top: 10px;
+}
+
