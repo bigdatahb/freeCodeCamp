@@ -333,3 +333,136 @@ span {
 ```
 
 需要注意的是，**继承是单向的**，只能从父元素继承到子元素。如果您覆盖子元素的样式，则不会影响父元素。
+
+### 列表样式
+
+#### 控制列表项之间的间距
+
+我们可以通过 margin 来指定列表项之间的间距，比如给 `li` 选择器设置 `margin-bottom` 属性
+
+有个时候也可以用 `line-height` 来间接实现列表项之间的间距
+
+#### list-style 属性
+
+在 CSS 中， `list-style` 属性用于控制网页上列表的外观。
+
+`list-style` 属性实际上是其他三个属性的简写：
+
+- `list-style-type` ，定义列表中使用的项目符号或数字的类型
+    - 对于无序列表，您可以从多种项目符号样式中进行选择，例如圆点、圆形或方形。
+
+    - 对于有序列表，您可以使用不同的编号系统，例如十进制、罗马数字，甚至字母字符。
+
+- `list-style-position` ，控制项目符号或编号相对于列表项内容的位置。
+    - 有两个值可以选择： `inside` 和 `outside`， 默认值是 `outside`
+
+    - `outside` 表示项目符号或数字会出现在内容外部
+
+    - `inside` 表示项目符号或数字会出现在内容内部，这可能会导致文本换行并与项目符号或数字对齐（当一个列表项的内容超过一行时，后面的行会与项目符号对齐）。
+
+- `list-style-image`，使用图像作为列表项的符号标记
+
+```html
+<ul
+    style="list-style: square inside url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');"
+>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+</ul>
+```
+
+### 链接样式
+
+默认的链接样式通常用蓝色表示未访问的链接，用紫色表示已访问的链接，这已经成为用户在浏览网站时所期望和依赖的标准。
+
+默认样式相当于：
+
+```css
+a:link {
+    color: blue;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: purple;
+}
+```
+
+我们可以修改默认样式:
+
+```css
+a:link {
+    color: blue;
+    text-decoration: none;
+    border-bottom: 1px solid blue;
+}
+
+a:visited {
+    color: purple;
+    border-bottom: 1px solid purple;
+}
+```
+
+我们还可以给链接的其他状态设置样式:
+
+```css
+a:hover {
+    color: red;
+}
+
+a:active {
+    color: darkorange;
+}
+```
+
+链接的状态有:
+
+- `link` 尚未访问的链接
+
+- `visited` 已访问或点击过的链接
+
+- `hover` 鼠标悬停在链接上时
+
+- `focus` 链接获得焦点时
+
+- `active` 链接被点击时
+
+这些状态可以使用 CSS 中的 `pseudo-classes` （伪类）来设置样式。
+
+伪类是添加到选择器中的一个关键字，用于指定所选元素的特殊状态。
+
+伪类语法大致如下：
+
+```css
+/** A 是选择器, :B 是伪类 */
+A:b {
+    property: value;
+}
+```
+
+**请注意**: 这 5 个伪类如果作用于同一个链接（`<a>` 标签），必须遵循 **LVFHA** 顺序:
+
+```css
+a:link {
+    color: blue;
+}
+
+a:visited {
+    color: purple;
+}
+
+a:focus {
+    outline: 2px solid orange;
+}
+
+a:hover {
+    color: red;
+}
+
+a:active {
+    color: green;
+}
+```
+
+**核心原因**: CSS 层叠规则（优先级相同的情况下，后定义的覆盖先定义的）。这 5 个伪类的优先级（特异性）完全相同，所以书写在后面的样式会覆盖前面的。
