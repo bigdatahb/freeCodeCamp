@@ -466,3 +466,240 @@ a:active {
 ```
 
 **核心原因**: CSS 层叠规则（优先级相同的情况下，后定义的覆盖先定义的）。这 5 个伪类的优先级（特异性）完全相同，所以书写在后面的样式会覆盖前面的。
+
+### 背景图片
+
+在 CSS 中使用背景图像时，您可以使用多个属性来控制这些图像的显示方式。
+
+比较重要的几个属性是: `background-size`, `background-repeat`, `background-position` 和 `background-attachment`
+
+我们先来看一下 `background-image` 属性:
+
+```css
+body {
+    background-image: url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');
+}
+```
+
+- `background-size`
+    - `contain`
+
+        你可以使用 `contain` 将图片放大到尽可能大，而不会裁剪或拉伸：
+
+        ```css
+        body {
+            background-image: url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');
+            background-size: contain;
+            min-height: 100px;
+        }
+        ```
+
+    - `cover`
+
+        使用 `cover` 值，那么背景图像就会缩放以覆盖整个 body 元素，同时保持其宽高比
+
+        ```css
+        body {
+            background-image: url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');
+            background-size: cover;
+            min-height: 100px;
+        }
+        ```
+
+        默认情况下，背景图片会在水平和垂直方向上重复排列，以填充整个父容器。不过，您可以通过 `background-repeat` 控制此行为。
+
+- `background-repeat`
+    - 图像不重复显示
+
+        ```css
+        body {
+            background-image: url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            min-height: 100px;
+        }
+        ```
+
+    - 图像水平方向重复
+
+        将 `background-repeat` 的值设置为 `repeat-x` 即可实现水平重复
+
+        ```css
+        body {
+            background-image: url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');
+            background-size: contain;
+            background-repeat: repeat-x;
+            min-height: 100px;
+        }
+        ```
+
+    - 图像垂直方向重复
+
+        将 `background-repeat` 的值设置为 `repeat-y` 即可实现垂直重复
+
+- `background-position`
+
+    要将背景图像定位到屏幕上，可以使用 `background-position` 属性。
+
+    `background-position` 属性允许您设置背景图像在元素中的显示位置。您可以使用 `top` 、 `bottom` 、 `left` 、 `right` 和 `center` 等关键字，也可以使用特定的像素值或百分比值。
+
+    ```css
+    body {
+        background-image: url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center top; /** 水平中心，垂直顶部 */
+        min-height: 100px;
+    }
+    ```
+
+- `background-attachment`
+
+    `background-attachment` 决定了背景图像是随内容滚动还是在页面滚动时保持固定。
+
+    主要取值:
+    - `scroll` （默认值），背景图像随内容滚动
+    - `fixed` ，背景图像保持在屏幕上的同一位置。
+
+    ```css
+    body {
+        background-image: url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');
+        background-position: center top;
+        background-attachment: fixed; /** 背景图像保持在固定位置 */
+    }
+    ```
+
+---
+
+`background` 属性可以将上述几个属性合并到一起进行设置:
+
+```css
+body {
+    background: center top fixed
+        url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');
+}
+```
+
+上述代码相当于将 `background-image` 设置为 `url('https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg');`，将 `background-position` 设置为 `center top`， 将 `background-attachment` 设置为 `fixed`
+
+### 背景渐变
+
+CSS 中有两种主要类型的渐变：**线性渐变** 和 **径向渐变**
+
+#### 线性渐变 linear-gradient
+
+线性渐变是指颜色沿直线过渡。您可以定义渐变的方向和涉及的颜色。
+
+基本语法:
+
+```css
+selector {
+    background: linear-gradient(direction, color-stop1, color-stop2, ...);
+}
+```
+
+- `direction` 是指渐变方向，可以是关键词如 `to right`, `to bottom`; 也可以是具体的角度如 `45deg` （45° 方向）
+
+- `color-stop` 颜色停止点
+
+下面看一个具体的例子:
+
+```css
+.linear-gradient {
+    background: linear-gradient(to right, red, yellow);
+    height: 40vh;
+}
+```
+
+如果只想中间的某一部分施行颜色渐变，可以指定颜色占比：
+
+```css
+.linear-gradient {
+    /* 0%-30% 纯红，30%-70% 红黄渐变，70%-100% 纯黄 */
+    background: linear-gradient(to right, red 30%, yellow 70%);
+    height: 40vh;
+}
+```
+
+#### 径向渐变 radial-gradient
+
+径向渐变是指颜色从 **原点**（通常是中心）向外呈圆形或椭圆形辐射过渡。
+
+基本语法:
+
+```css
+selector {
+    background: radial-gradient(
+        shape size at position,
+        color-stop1,
+        color-stop2,
+        ...
+    );
+}
+```
+
+- `shape` 指定渐变形状， 如 `circle`, `ellipse`
+
+- `size` 决定了渐变结束形状的大小, 主要取值： `closest-side` 、 `closest-corner` 、 `farthest-side` 或 `farthest-corner`
+
+- `position` 决定渐变中心的位置，可以使用关键字如 `center`, `top left`, `bottom right`；也可以使用精确值如 `50% 50%`, `10px 20px` 等
+
+- `color-stop` 是颜色停止点
+
+具体示例:
+
+```css
+.radial-gradient {
+    background: radial-gradient(
+        circle closest-side at center,
+        red,
+        yellow 50%,
+        green
+    );
+    height: 60vh;
+}
+```
+
+### 给图片添加边框
+
+#### border 属性
+
+给图片添加边框最直接的方法是使用 `border` 属性。这个属性是一种简写方式，可以让你一次性设置边框的宽度、样式和颜色。
+
+```css
+img {
+    border: 2px solid red;
+}
+```
+
+如果需要对边框的各个边进行更精细的控制，可以使用每个边的特定边框属性：
+
+```css
+img {
+    border-top: 10px solid red;
+    border-right: 10px dashed green;
+    border-bottom: 10px dotted blue;
+    border-left: 10px double purple;
+}
+```
+
+#### outline 属性
+
+创建边框效果的另一种方法是使用 `outline` 属性。 `outline` 不会影响元素的尺寸或布局：
+
+```css
+img {
+    outline: 3px solid gold;
+}
+```
+
+#### 给边框设置圆角
+
+如果要为边框创建圆角，可以将 `border-radius` 属性与 `border` 属性结合使用：
+
+```css
+img {
+    border: 2px solid black;
+    border-radius: 10px;
+}
+```
