@@ -703,3 +703,660 @@ img {
     border-radius: 10px;
 }
 ```
+
+## 设计 Design
+
+### 常见设计相关术语
+
+#### 布局 Layout
+
+布局是指在页面或屏幕上如何排列视觉元素以传达信息。这些元素可能包括文本、图像和留白。布局就像设计的蓝图。设计师必须考虑每个元素的位置、大小和层级关系。
+
+#### 对齐 Alignment
+
+对齐是指元素彼此之间的放置关系。
+
+#### 构图 Composition
+
+构图是安排元素以创造和谐设计的艺术。
+
+布局主要关注元素的放置位置，而构图还会考虑这种放置方式对整体设计的艺术影响。
+
+#### 平衡 Balance
+
+平衡是指 **视觉重量** 在画面中的分布方式。设计师力求通过对称或不对称的布局来创造一种平衡感。平衡的设计给人以和谐之感。
+
+#### 层级 Hierarchy
+
+层级确立了设计中各个元素的优先顺序，确保最重要的信息首先被注意到。你可以通过大小、颜色、对比度、对齐方式、留白甚至字体来实现视觉层级。
+
+#### 对比度 Contrast
+
+使用合适的对比度可以清晰的展现各个元素，高对比度能提高可读性。
+
+#### 留白 White Space
+
+留白，也称为“负空间”，是指设计中的空白区域，也就是元素周围的区域。你可能会惊讶地发现，留白不一定是白色的。实际上，它可以是任何颜色或纹理的空间。留白的作用是提高设计的可读性，并增强视觉层次感。
+
+#### 用户界面 User Interface, UI
+
+用户界面（也称 UI）是指人与计算机交互的方式。用户界面包括用户在屏幕上可以看到的视觉和交互元素，例如图标、图像、文本、菜单、链接和按钮。
+
+#### 用户体验 User Experience, UX
+
+用户体验（UX）是指用户在使用产品或服务时的感受。一款用户体验设计良好的应用程序应该直观易用、高效便捷、方便访问且令人愉悦。用户界面在提升用户体验的便捷性和愉悦感方面起着关键作用，因此两者密切相关。
+
+### 如何设计良好的背景和前景对比？
+
+**对比度** 是指两种颜色之间的差异，或者说，区分它们的难易程度。
+
+对比度越高的颜色在视觉上就越容易区分，而对比度越低的颜色在视觉上就越相似。
+
+但如何判断对比度是否“足够好”呢？你不能仅仅根据文本的视觉效果来判断，因为每个用户的体验都不同。
+
+WCAG（网页内容无障碍指南，Web Content Accessibility Guidelines）给我们提供了标准：
+
+- 对比度为 `4.5:1` 的文本被认为是 AA 标准，这是确保大多数用户都能访问的最低标准。
+
+- 对比度为 `7:1` 的文本被认为是 AAA 标准，可确保最佳的可访问性。
+
+有很多网站可以检查两种颜色之间的对比度，但大多数浏览器都允许您直接在网站的开发者工具中执行此操作。
+
+<img src="imgs/01.png" alt="使用 chrome 开发者工具的 css overview 查看对比度" style="max-width:800px"><br>
+<img src="imgs/02.png" alt="使用 chrome 开发者工具的 color picker 查看对比度" style="max-width:800px"><br>
+
+下面是一个演示对比度的示例：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>freeCodeCamp</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="contrast-21">
+            <span class="label">Contrast Ratio 21:1</span>
+            This is black text on a white background, which has the highest
+            contrast ratio of 21:1.
+        </div>
+
+        <div class="purple-on-blue">
+            <span class="label">Purple on Blue (Lower Contrast)</span>
+            This doesn't meet the AA standard.
+        </div>
+
+        <div class="red-on-blue">
+            <span class="label">Red on Blue (Higher Contrast Hue Shift)</span>
+            This doesn't meet accessibility standards.
+        </div>
+
+        <div class="low-sat-red-on-blue">
+            <span class="label"
+                >Low Saturation Red on Blue (Contrast ~1.49:1)</span
+            >
+            This red has low saturation, resulting in a poor contrast ratio.
+        </div>
+
+        <div class="high-sat-red-on-blue">
+            <span class="label"
+                >Higher Saturation Red on Blue (Contrast ~3.54:1)</span
+            >
+            Increasing the saturation of red improves contrast but it’s still
+            below AA standard.
+        </div>
+
+        <div class="dark-red-on-light-blue">
+            <span class="label"
+                >Darker Red on Light Blue (Contrast ~10.34:1)</span
+            >
+            Decreasing the lightness of the red increases the contrast ratio
+            significantly.
+        </div>
+    </body>
+</html>
+```
+
+```css
+.contrast-21 {
+    background-color: white;
+    color: black;
+    padding: 15px;
+    font-family: sans-serif;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.purple-on-blue {
+    background-color: #0000cc;
+    color: #800080;
+    padding: 15px;
+    font-family: sans-serif;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.red-on-blue {
+    background-color: #0000cc;
+    color: #ff0000;
+    padding: 15px;
+    font-family: sans-serif;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.low-sat-red-on-blue {
+    background-color: #0000cc;
+    color: #b23333;
+    padding: 15px;
+    font-family: sans-serif;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.high-sat-red-on-blue {
+    background-color: #0000cc;
+    color: #ff4d4d;
+    padding: 15px;
+    font-family: sans-serif;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.dark-red-on-light-blue {
+    background-color: #add8e6;
+    color: #8b0000;
+    padding: 15px;
+}
+```
+
+### 以用户为中心的设计
+
+#### 什么是以用户为中心的设计？
+
+以用户为中心的设计是一种网页开发方法，它优先考虑最终用户，包括他们的需求、偏好和限制。
+
+以用户为中心的设计首先要考虑的是目标用户群体。例如，如果你的目标用户群体比较年轻，你可以采用更炫酷、更吸引眼球的设计，迅速抓住他们的注意力。而对于年龄较大的用户群体，你则应该更注重简洁明了、避免干扰的设计。
+
+用户行为也是一个重要因素。您需要利用分析工具（例如 Google Analytics）来衡量用户如何与您的页面互动。这可以揭示用户可能遇到的“卡住”并离开页面的地方，或者发现改进整体交互流程的机会。
+
+以用户为中心的设计关键在于真正让用户参与其中。提供一个反馈渠道，让用户分享他们在使用网站的体验和痛点，可以帮助你收集重要信息并进行迭代改进。归根结底，以用户为中心的设计意味着你需要将用户置于决策的首位，无论是通过调研还是直接反馈。
+
+#### 用户研究、用户测试和用户需求
+
+**用户研究** 是对使用您产品的人群进行系统性研究。其目标是衡量用户的需求、行为和痛点。
+
+用户研究的形式多种多样。其中最常见的或许是 **净推荐值（Net Promoter Score，NPS）**。NPS 衡量的是用户向朋友推荐您产品的可能性。
+
+NPS 的测量方法是在用户使用过程中的关键节点（例如 7 天、30 天和 90 天后）进行调查。NPS 的评分范围为 0 到 10，9 分和 10 分表示用户是您网站的积极推荐者。
+
+另一种研究方法是用户流失调研。这是一种在用户取消订阅或删除帐户时向他们展示的调查问卷。通过这项调查，您可以深入了解导致用户流失的因素，从而采取相应的措施。
+
+**用户测试** 指的是在用户与应用程序交互时收集数据的过程。
+
+作为一名 Web 开发人员，你可能会遇到 A/B 测试。A/B 测试是指将新功能推送给随机选择的用户群体子集。然后，你可以利用分析数据来确定该功能是否有效。
+
+**用户需求** 指的是应用程序需要遵循的故事或准则。它可以指导开发过程。用户需求可以通过用户调研、行业标准或利益相关者的反馈来定义。
+
+#### 深色模式
+
+深色模式是网页应用程序的一项特殊功能，它可以将默认的浅色配色方案更改为深色配色方案。这有助于减少眼睛疲劳，并提高弱光环境下的阅读体验。在设计深色模式功能时，了解最佳实践至关重要，以确保其有效且易于使用。
+
+最佳实践：
+
+- 在深色模式下应避免使用饱和度高的颜色。在深色模式下，低饱和度的颜色视觉效果更舒适
+
+- 相比于纯黑背景搭配白色文字，建议使用深灰色背景搭配浅灰色文字，以获得更柔和的对比度。
+
+- 在实施深色模式时，您应该考虑如何使深色模式功能与品牌的颜色和风格保持一致。
+    - 品牌标识是一组代表品牌的视觉元素，例如徽标、颜色和字体。
+    - 将品牌图标和按钮设置为全饱和度，而周围元素降低饱和度，也是可以的。
+
+在设计时，始终要关注用户体验和对比度。深色模式也不例外，遵循以下最佳实践，即可创建高效且用户友好的深色模式功能。
+
+#### 面包屑导航
+
+在网页层级比较深的网站上经常可以看到类似 `Homepage/articles/java/jvm` 这样子的导航，这种导航称为 **面包屑导航（Breadcrumb Navigation）**
+
+最佳实践：
+
+- 只有在网页层级复杂的设计中才应该使用这种导航
+
+- 面包屑导航应该放在显眼的位置，方便用户找到。一般放在主导航栏的上方或者下方
+
+- 面包屑导航的字体不能太小，但也不能太大（防止长路径占用过多空间）
+
+#### 卡片设计
+
+最佳实践：
+
+- 卡片设计的首要原则是 **简洁**。
+
+- 需要考虑用户可以点击卡片的位置。
+    - 有些卡片设计只有一个按钮，用户可以很直观地知道点击位置。
+    - 而另一些卡片设计则允许整个卡片都可点击。当用户将鼠标悬停在卡片的任何部分时，卡片会改变颜色或添加阴影效果，以提示该卡片可点击。
+    - 无论选择哪种设计，都必须在整个网站中保持一致，并且易于用户理解。
+
+- 卡片上媒体素材的使用
+    - 选择高质量的媒体素材可以显著提升用户体验。
+
+- 色彩层级的使用
+    - 你需要确保卡片上最重要的信息最为醒目。你可以使用鲜艳的颜色来表示重要元素，例如行动号召按钮（call-to-action，CTA），而使用浅色来表示卡片上不太重要的元素。
+
+#### 无限滚动
+
+无限滚动是一种设计模式，它会随着用户向下滚动页面而加载更多内容。这种模式常用于 Twitter 等社交媒体网站。
+
+无限滚动也常被用来替代分页。分页是一种将内容分成多个页面的设计模式。当需要显示大量内容时，通常会使用分页。
+
+最佳实践：
+
+- 要提供一个“加载更多”按钮，用户点击后即可加载下一组结果。这样可以让用户更好地控制何时查看更多内容。
+
+- 另一个可以考虑的方案是添加“返回”按钮。这样用户无需向上滚动即可返回上一页。这能提升用户体验，并让他们更好地掌控浏览过程。
+
+- 有时你会看到一些设计中带有“返回顶部”按钮，点击即可返回搜索结果页面的顶部。另一个需要考虑的因素是提供加载指示器。用户应该能够清晰地看到正在加载更多内容；否则，他们可能会误以为页面出现故障。
+
+- 确保用户能够随时访问页脚。如果页脚包含重要信息，则应确保用户始终可以访问。
+
+#### 模态对话框 Modal Dialog
+
+模态对话框（Modal Dialog Box）是一种弹窗界面元素，它会强制打断用户的操作流程。在关闭该对话框或做出响应（如点击“确定”或“取消”）之前，用户无法与主窗口或应用程序的其他部分进行交互。
+
+HTML 中有一个 `dialog` 元素，可以用来创建模态框。
+
+```html
+<button id="open-modal">Open Modal</button>
+<dialog>
+    <h2>Subscribe to our Newsletter!</h2>
+    <p>Get the latest updates and offers.</p>
+    <button>Subscribe</button>
+    <button>Close</button>
+</dialog>
+```
+
+```css
+dialog {
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+```
+
+```js
+const dialog = document.querySelector('dialog');
+const closeButton = dialog.querySelector('button:last-of-type');
+const openModalButton = document.getElementById('open-modal');
+
+closeButton.addEventListener('click', () => {
+    dialog.close();
+});
+
+openModalButton.addEventListener('click', () => {
+    dialog.showModal();
+});
+
+// Close the modal when clicking outside of it
+dialog.addEventListener('click', (event) => {
+    const rect = dialog.getBoundingClientRect();
+    const isInDialog =
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
+    if (!isInDialog) {
+        dialog.close();
+    }
+});
+```
+
+- 允许用户点击模态框外部将其关闭始终是一个好主意。
+
+- 模态框也应该有关闭按钮。虽然你可能很希望用户点击你的行动号召按钮，但重要的是要让他们可以选择退出模态框，并继续他们之前正在进行的操作。
+
+#### 进度指示 Progress Indication
+
+进度指示是一种向用户展示他们在流程中所处阶段的方式。它可以用于表单、注册和设置流程中。其目的是帮助用户了解他们所处的流程阶段以及还需要完成多少步骤。
+
+最佳实践：
+
+- 保持简洁
+
+- 允许用户返回到之前的步骤
+
+- 确保进度指示部分易于查找
+
+- 要有清晰的章节标题、百分比或步骤说明
+
+一个示例：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>freeCodeCamp</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <form id="multiStepForm">
+            <div class="form-progress">
+                <label class="progress-label">Form progress</label>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                    <div class="progress-text">Step 1 of 3</div>
+                </div>
+            </div>
+
+            <!-- Step 1 -->
+            <fieldset class="form-step active">
+                <legend>Personal Information</legend>
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+
+                <button type="button" class="next-btn">Next</button>
+            </fieldset>
+
+            <!-- Step 2 -->
+            <fieldset class="form-step">
+                <legend>Address</legend>
+                <label for="address">Street Address:</label>
+                <input type="text" id="address" name="address" required />
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required />
+
+                <button type="button" class="prev-btn">Previous</button>
+                <button type="button" class="next-btn">Next</button>
+            </fieldset>
+
+            <!-- Step 3 -->
+            <fieldset class="form-step">
+                <legend>Review & Submit</legend>
+                <p>Please review your information before submitting.</p>
+
+                <button type="button" class="prev-btn">Previous</button>
+                <button type="submit">Submit</button>
+            </fieldset>
+        </form>
+
+        <script src="index.js"></script>
+    </body>
+</html>
+```
+
+```css
+.form-progress {
+    max-width: 500px;
+    margin: 20px auto 30px;
+    font-family: Arial, sans-serif;
+}
+
+.progress-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.progress-container {
+    position: relative;
+    background-color: #555;
+    border-radius: 8px;
+    height: 30px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar {
+    background-color: #4caf50;
+    height: 100%;
+    width: 0;
+    border-radius: 8px 0 0 8px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    pointer-events: none;
+    user-select: none;
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #222;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+}
+
+input[type='text'],
+input[type='email'] {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+input[type='text']:focus,
+input[type='email']:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+button {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+button:disabled {
+    background-color: #9e9e9e;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .form-progress,
+    form {
+        max-width: 90%;
+        margin: 20px auto;
+    }
+}
+```
+
+```js
+const form = document.getElementById('multiStepForm');
+const steps = form.querySelectorAll('.form-step');
+const progressBar = form.querySelector('.progress-bar');
+const progressText = form.querySelector('.progress-text');
+const totalSteps = steps.length;
+
+let currentStep = 0;
+
+function updateProgress() {
+    const percent = ((currentStep + 1) / totalSteps) * 100;
+    progressBar.style.width = percent + '%';
+    progressText.textContent = `Step ${currentStep + 1} of ${totalSteps}`;
+}
+
+function showStep(index) {
+    steps.forEach((step, i) => {
+        step.classList.toggle('active', i === index);
+    });
+    updateProgress();
+}
+
+form.querySelectorAll('.next-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        if (currentStep < totalSteps - 1) {
+            currentStep++;
+            showStep(currentStep);
+        }
+    });
+});
+
+form.querySelectorAll('.prev-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        if (currentStep > 0) {
+            currentStep--;
+            showStep(currentStep);
+        }
+    });
+});
+
+showStep(currentStep);
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Form submitted!');
+});
+```
+
+#### 购物车
+
+最佳实践：
+
+- 确保用户始终可以看到购物车。大多数购物车设计都会将其显示在页面右上角。
+
+- 用户应该能够在购物车图标旁边看到购物车中的商品数量，并且可以点击购物车查看所购商品的更多详细信息。
+
+- 为用户提供清晰便捷的方式来更新购物车中的商品数量。这可以通过在购物车中每个商品旁边添加数量输入框来实现。用户只需在输入框中更改数字即可轻松更新商品数量。
+
+- 您还应该在购物车中的每个商品旁边提供一个“移除”按钮。这样用户就可以轻松地从购物车中移除商品。
+
+- 购物车图标应该易于所有用户识别。常见的图标是带把手和轮子的购物车。其他图标可以是购物袋或购物篮。但你不希望选择过于抽象或难以理解的图标。
+
+- 当用户想要查看购物车总价时，应该能够轻松找到购物车中所有商品的总价。总价应该醒目地显示在页面上，以免用户费力查找。
+
+- 您应该提供一个清晰的行动号召按钮（CTA），引导用户进入结账页面。
+
+### 通用设计工具
+
+#### 设计简报 Design Briefs
+
+在设计新功能或应用程序时，一个好的第一步是制定设计简报。
+
+设计简报是一份文件，它概述了项目的目标和需求。它就像一张路线图，指导设计过程，并确保最终产品满足客户的需求。
+
+设计简报中应包含几个关键要素：
+
+- 对项目和业务的概述。该概述应包括公司的详细信息、使命、价值观、独特卖点以及产品或服务。
+
+- 记录项目的目标和目的
+    - 预期成果
+    - 增加网站流量或将每月页面访问量增加 X%
+
+- 设计简报应包含目标受众的人口统计信息、兴趣爱好和需求
+
+- 应包括交付成果、时间表和预算。 交付成果应包括项目过程中将要产出的所有物品清单，例如模型和最终设计。
+
+项目设计面临的挑战之一是时间安排和预算控制。在既定的时间和预算范围内，对能够实现的目标保持务实的态度至关重要。因此，制定一份概述这些限制条件的设计简报非常重要。
+
+#### 开发人员应该了解的一些常用设计工具
+
+- **Figma**
+
+    Figma 是开发者应该掌握的最常用、最基本的界面设计工具之一。
+
+    这款基于云端的工具专注于用户界面和用户体验 (UI/UX) 设计。它支持设计和开发团队随时随地协作，并提供以下内置功能：
+    - Vector-based design 基于矢量的设计
+    - Automatic layout 自动布局
+    - Commenting and feedback system 评论和反馈系统
+    - Version history 版本历史记录
+    - Real-time collaboration 实时协作
+    - Design systems, and more. 设计系统等等。
+
+    要开始使用 Figma，您可以使用其网页版界面，也可以下载桌面应用程序到您的电脑上。它提供丰富的免费功能，因此您无需购买专业版即可完成许多工作。
+
+- **Sketch**
+
+    Sketch 是开发者应该熟悉的另一款重要设计工具。与 Figma 类似，它基于矢量图形，主要用于 UI/UX 设计。
+
+    Sketch 因其直观的界面和简洁性而广受欢迎，是开发人员快速创建原型的不二之选。它也被设计师广泛用于创建用户界面、图标和网页布局等任务。
+
+    Sketch 的主要局限在于它缺乏基于云的界面，并且只能在 macOS 上使用。
+
+- **Adobe XD**
+
+    Adobe XD 是另一款基于矢量的 UI/UX 设计原型制作工具，以其与 Photoshop、Illustrator 和 After Effects 等其他 Adob​​e 应用程序的无缝集成而闻名。
+
+    Adobe XD 同时支持 Windows 和 macOS 系统，并包含基于云端的界面。
+
+- **Canva**
+
+    你可以使用 Canva 创建各种视觉内容，包括海报、封面照片、演示文稿、短视频等等。它用户友好且简洁的设计使其成为初学者的理想之选。
+
+    此外，Canva 还提供丰富的模板、图像和设计元素库，使创建专业外观的设计变得轻松便捷。
+
+    Canva 还支持网页界面设计，并允许与团队成员协作。该平台可在网页、桌面端、安卓和 iOS 应用上使用。
+
+- **其他工具**
+
+    其他开发人员应该了解的常用设计工具包括 Framer、InVision、Adobe Photoshop、Adobe Illustrator 和 Miro。
