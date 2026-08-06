@@ -1360,3 +1360,150 @@ form.addEventListener('submit', (e) => {
 - **其他工具**
 
     其他开发人员应该了解的常用设计工具包括 Framer、InVision、Adobe Photoshop、Adobe Illustrator 和 Miro。
+
+## 单位
+
+在设计页面时，您会用到各种属性，例如宽度、高度、内边距、外边距等等。定义这些属性时，您需要指定要使用的长度单位。
+
+可以使用两种单位：**相对单位** 和 **绝对单位**。
+
+### 绝对单位 Absolute Unit
+
+最常用的绝对单位是 **像素**（`px`），像素是 CSS 中的固定尺寸计量单位，可以精确控制尺寸。这意味着 `1` 像素始终等于 `1/96` 英寸。
+
+需要注意的是，虽然 1px 在 CSS 布局中被标准化为 1/96 英寸，但像素的实际物理尺寸可能会因显示器而异。
+
+其他类型的绝对单位：
+
+- `in`, 表示 inch，等于 96 个像素
+
+- `cm`， 厘米 `1 cm = 25.2/64 inch`
+
+- `mm`，毫米
+
+- `q`，四分之一毫米 `1 q = 1/40 cm`
+
+- `pc`，Pica 派卡 `1 pc = 1/6 inch`
+
+- `pt`，Point 点 `1 pt = 1/72 inch`
+
+这些单位大部分都用于打印而非屏幕显示
+
+### 百分比
+
+CSS 中的百分比是 **相对单位**，允许您将大小、尺寸和其他属性定义为其 **父元素的比例**。使用百分比值时，您实际上是在说：“将此元素的大小设置为其容器的 X%”。
+
+百分比非常适合创建能够适应各种屏幕尺寸的自适应布局。例如，将容器的 width: 80% 即可确保无论在何种设备上，它都占据其父元素宽度的 80%。
+
+### em & rem
+
+#### em
+
+`em` 单位是相对于元素的字体大小而言的。如果字体大小属性本身使用了 `em` 单位，那么它将会是相对于父元素的字体大小而言的。
+
+举个例子：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>freeCodeCamp</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <p class="para">I am a paragraph element</p>
+
+        <div class="blue-box"></div>
+    </body>
+</html>
+```
+
+```css
+.para {
+    font-size: 20px;
+    margin-bottom: 1.5em; /** 因为当前元素设置了 font-size 属性，所以这里的 1.5em = 30px */
+    border: 2px solid red;
+}
+
+.blue-box {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+}
+```
+
+一个段落，一个方块。我们给段落的底部设置了 `1.5em` 的距离，前面说了 `em` 单位是相对于元素的字体大小而言的，段落的字体大小是 `20px`，因此这里的 `1.5em` 其实等于 `30px`
+
+若是我们将 `.para` 的 `font-size` 属性给去掉，那么 `margin-bottom` 的 `1.5em` 则是相对于父元素的字体大小而言，其父元素是 `body`，`body` 没有默认的 `font-size`, 但它会继承 `html`的 `font-size`，`html` 的默认字体大小是 `16px`，因此，这里的 `1.5em` 将会是 `24px`
+
+> CSS 中，`font-size` 是一个 **继承属性**。如果当前元素没有显式设置 `font-size`，它不会直接去“看”父元素有没有写 `font-size` 样式，而是 **直接继承父元素计算后的最终字体大小**。
+
+其实本质上是这样处理的：
+
+- 如果父元素也没有设置，就继承祖父元素的。
+
+- 如果所有祖先都没有设置，最终会一直追溯到根元素 `<html>`。
+
+- 如果 `<html>` 也没有设置，浏览器会使用默认值，通常是 `16px`。
+
+#### rem
+
+rem 单位是相对于根元素，即 `<html>` 元素的字体大小而言的
+
+默认情况下，浏览器赋予 `<html>` 的默认字体大小是 `16px`, 如果用户在浏览器设置中增大字体，那么 `<html>` 元素的字体会增大，从而所有 `rem` 单位都会按比例进行缩放
+
+```css
+.para {
+    font-size: 1.2rem; /** rem 是相对于 html 元素的 font-size 而言的, 假设 html 的 font-size 是 16px, 那么 1.2rem = 19.2px */
+    margin-bottom: 1.5em; /** 假设 html 的 font-size 是 16px, 1.5rem = 24px */
+    border: 2px solid red;
+}
+```
+
+与 `em` 的区别:
+
+- `em` 单位是相对于元素自身或其父元素的字体大小的
+
+- `rem` 单位是相对于根元素的字体大小的
+
+### vh & vw
+
+`vh` 和 `vw` 是视口相对单位，允许您根据浏览器窗口的尺寸调整元素大小
+
+`vh` 表示 viewport height （视口高度）， `1vh` 等于视口高度的 `1%`
+
+`vw` 表示 viewport width （视口宽度）， `1vw` 等于视口宽度的 `1%`
+
+### calc()
+
+使用 `calc()` 函数，您可以直接在样式表中执行计算，从而动态确定属性值。
+
+```css
+div {
+    color: white;
+    background-color: #1b1b32;
+    width: calc(50% - 20px); /** 50% 表示父容器宽度的 50% */
+}
+```
+
+如果父容器调整大小, 这个 `width` 属性值会自动进行计算
+
+使用 `calc()` 注意事项：
+
+- 表达式运算符两端最好加上空格，比如 `calc(100% - 30px)`
+    - `calc(100% -30px)` 是无效的，因为 `+`, `-` 两端必须要有空格
+    - 虽然乘法和除法可以不加空格，但是为了统一，最好在所有运算符两端都加上空格
+
+- 可以嵌套调用 `calc()` 函数
+
+- 如果表达式中有零值，零值也需要带上单位，比如 `calc(100% - 0px)`
+    - `calc(100% - 0)` 是无效的
+
+- 使用乘法，其中一个操作数必须是无单位的， `calc(5 * 50px)` 或 `calc(5px * 50)`
+    - `calc(5px * 50px)` 是无效的
+
+- 除法中，如果使用两个相同单位的值相除，结果会是一个无单位的值。一般是用一个有单位的值除以一个无单位的量纲
