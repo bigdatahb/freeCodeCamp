@@ -1507,3 +1507,232 @@ div {
     - `calc(5px * 50px)` 是无效的
 
 - 除法中，如果使用两个相同单位的值相除，结果会是一个无单位的值。一般是用一个有单位的值除以一个无单位的量纲
+
+## 伪类和伪元素 Pseudo-classes and Pseudo-elements
+
+### 伪类
+
+#### 伪类介绍
+
+伪类是特殊的 CSS 关键字，允许您根据元素的特定状态或位置来选择元素。
+
+元素的状态或位置可以包括：
+
+- 处于激活状态时，`:active`
+
+- 鼠标悬停时，`:hover`
+
+- 元素聚焦时, `:focus`
+
+- 父母的第一个孩子，`:first-child`
+
+- 父母的最后一个孩子，`:last-child`
+
+- 链接被访问时，`:visited`
+
+- 被禁用时，`:disabled`
+
+- 启用时，`:enabled`
+
+- 复选框或单选按钮被选中时，`:checked`
+
+- 模态，`:modal`
+
+- `:first-of-type`
+
+- `:last-of-type`
+
+- `:nth-of-type`
+
+- `:link`
+
+- `:any-link`, 是 `:link` 和 `:visited` 的组合，匹配任何带有 `href` 的 `<a>` 元素
+
+- `:local-link`，同一文档内的链接，目前还没有任何一个浏览器支持这个伪类
+
+- `:target`，与当前 URL 页面内导航匹配的元素（页内跳转到的那个元素）
+
+伪类语法：
+
+```css
+/** 在选择器后使用冒号跟上伪类名称 */
+selector:pseudo-class {
+    /* CSS properties */
+}
+```
+
+#### `input` 元素相关伪类：
+
+- `:focus`
+
+- `:hover`
+
+- `:checked`
+
+- 是必填字段时，`:required`
+
+- 表单验证合格时， `:valid`
+
+- 表单验证失败时， `:invalid`
+
+- `:disabled`
+
+- `:enabled`
+
+- `:autofill`
+
+- `:optional`
+
+- `:in-range`
+
+- `:out-of-range`
+
+#### 树状结构伪类
+
+树状伪类允许您根据元素在文档树中的位置来定位和设置元素样式。文档树指的是 HTML 文档中元素的层级结构。
+
+- `:root` ：根，通常指向 `<html>` 元素
+- `:empty` ：空元素，即除了空格外没有其他子元素的元素
+- `:nth-child(n)`，根据元素在父元素中的位置来选择，`n` 可以是具体的数值，也可以是 `odd`, `even` 这样的关键字
+- `:nth-last-child(n)`，选择最后 n 个子元素
+- `:first-child` :第一个孩子
+- `:last-child` ：最后一个孩子
+- `:only-child`： 选中只有一个子元素的那个元素
+- `:nth-of-type`
+- `:first-of-type` :第一个类型
+- `:last-of-type`
+- `:only-of-type`
+
+`:root` 伪类也常用于设置 CSS 变量:
+
+```css
+:root {
+    --main-font: 'Arial, sans-serif';
+    --primary-color: blue;
+    --secondary-color: green;
+}
+```
+
+#### 函数式伪类
+
+函数式伪类允许您根据更复杂的条件或关系选择元素。
+
+函数式伪类的例子有：
+
+- `:is()`
+
+    ```css
+    :is(button, a.button, input[type='submit'], input[type='reset']) {
+        background-color: darkblue;
+        color: white;
+        border: 1px solid darkblue;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block;
+        margin: 5px;
+        font-size: 16px;
+        text-align: center;
+    }
+    ```
+
+- `:where()`
+
+    ```css
+    :where(h1, h2, h3) {
+        margin: 0;
+        padding: 0;
+    }
+    ```
+
+- `:has()`
+
+    ```css
+    article:has(h2) {
+        border: 2px solid hotpink;
+    }
+    ```
+
+- `:not()`
+
+    ```css
+    button:not(.primary) {
+        background-color: grey;
+    }
+    ```
+
+### 伪元素
+
+“伪”指的是“非真实的”，因此伪元素是虚拟的或合成的元素，它们并不直接对应任何实际的 HTML 元素。
+
+伪元素允许你设置元素特定部分的样式，或者插入内容而无需添加额外的 HTML 代码。
+
+要应用伪元素，请使用双冒号（`::`） 将其附加到原始元素的选择器上。
+
+伪元素基本语法:
+
+```css
+selector::pseudo-element {
+    property: value;
+}
+```
+
+双冒号是伪元素与伪类的区别所在，伪类使用单冒号。
+
+伪元素允许您设置元素内容的特定部分样式，或在其前后插入内容，但它们不能独立存在。伪元素所附加的元素称为其 **源元素（originating element）**。
+
+常见伪元素:
+
+- `::before`，
+
+- `::after`
+
+- `::first-letter`，用于设置元素内容的首字母样式
+
+- `::marker`， 它允许您选择列表项的标记、项目符号或编号进行样式设置。
+
+- `::placeholder`
+
+- `::spelling-error`
+
+- `::selection`
+
+`::before` 允许你在元素内容之前插入内容，而 `::after` 允许你在元素内容之后插入内容。
+
+示例：
+
+```html
+<link rel="stylesheet" href="styles.css" />
+<button class="cta-button">Learn More</button>
+```
+
+```css
+.cta-button {
+    background-color: lightseagreen;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.cta-button::before {
+    content: '⭐';
+    position: absolute;
+    left: 3px;
+    top: 8px;
+    font-size: 0.75rem;
+}
+
+.cta-button::after {
+    content: '➡️';
+    position: absolute;
+    right: 5px;
+    bottom: 6px;
+    font-size: 1.125rem;
+    transition: transform 0.3s ease;
+}
+```
+
+`content` 属性用于表示您希望添加的内容。
