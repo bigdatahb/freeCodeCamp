@@ -1904,3 +1904,204 @@ element {
     color: #RRGGBBAA;
 }
 ```
+
+## 表单样式最佳实践
+
+### 文本输入框
+
+与所有文本元素一样，您需要确保应用于文本输入框的样式符合无障碍标准。这意味着字体大小要合适，颜色要与背景有足够的对比度。
+
+- `placeholder` 是经常容易忽略的点，占位符也是文本，也可以对其设置样式
+
+    ```css
+    input[type='email']::placeholder {
+        color: #555;
+        opacity: 1;
+        font-style: italic;
+    }
+    ```
+
+- 应该允许用户修改输入内容
+    - 如果是 `textarea` 就不应该移除调整其大小的功能。当用户缩放页面时，输入内容也应该相应缩放。
+
+        ```css
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: 2px solid #555;
+            border-radius: 4px;
+            /** 前背景色要符合对比度标准，至少得是 AA 标准 (4.5:1), AAA (7:1) */
+            background-color: #fff;
+            color: #111;
+            /** resize 可以手动调整文本框大小 */
+            resize: both;
+            box-sizing: border-box;
+        }
+        ```
+
+- 焦点样式，当输入框获得焦点时也应该有明显的标识，例如加粗边框或者设置阴影
+
+    ```css
+    /** 加粗边框 */
+    input[type='email']:focus {
+        outline: 3px solid #1e90ff;
+        border-color: #1e90ff;
+    }
+
+    /** 设置阴影，这里是为了演示，实际开发选择一种就行 */
+    input:focus {
+        border-color: #1e90ff;
+        box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.4);
+        outline: none;
+    }
+    ```
+
+- 要考虑错误状态。当用户输入的文本未通过输入验证时，需要有合适的样式提醒用户
+
+    ```css
+    input.error {
+        border-color: #d93025;
+        background-color: #fff5f5;
+    }
+    .error-message {
+        color: #d93025;
+        font-size: 0.95rem;
+        margin-top: 0.4rem;
+    }
+    ```
+
+### 何时应该使用 `appearance: none`
+
+浏览器会对很多元素应用默认样式。对于输入元素来说，使用 CSS 自定义样式的能力可能会受到很大限制。因此，你可以使用 `appearance: none` 来隐藏默认样式的某些元素，并创建自己的样式。
+
+自定义复选框样式:
+
+```html
+<link rel="stylesheet" href="styles.css" />
+<form>
+    <label> <input class="checkbox" type="checkbox" /> Agree </label>
+</form>
+```
+
+```css
+.checkbox {
+    /** 隐藏浏览器的默认样式 */
+    appearance: none;
+    /** 自定义未选中或未获得焦点时的复选框样式 */
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    vertical-align: middle;
+}
+
+.checkbox:hover {
+    border-color: #888;
+}
+
+/** 自定义选中时的样式，利用伪元素 ::after 来配合实现 */
+.checkbox:checked {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
+
+/** 伪元素实现对钩样式 */
+.checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox:focus {
+    outline: 2px solid #90caf9;
+    outline-offset: 2px;
+}
+```
+
+创建一致的跨平台样式是使用此属性的一个重要原因！
+
+### 设置特殊输入元素样式的常见问题
+
+特殊输入元素：时间输入、颜色输入等
+
+这些特殊类型的输入框依赖于复杂的伪元素来创建日期和颜色选择器等元素。
+
+这给这些输入框的样式设计带来了巨大的挑战。其中一个挑战是，由于默认样式完全取决于浏览器，因此在一个浏览器中看起来正确的 CSS 代码在另一个浏览器中可能会产生截然不同的结果。
+
+- 下面是一个颜色选择器的示例:
+
+    ```html
+    <link rel="stylesheet" href="styles.css" />
+
+    <form>
+        <label for="favorite-color">Pick your favorite color:</label>
+        <input type="color" id="favorite-color" name="favorite-color" />
+    </form>
+    ```
+
+    ```css
+    input {
+        padding: 8px 12px;
+        margin: 8px 0;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    input[type='color'] {
+        width: 60px;
+        height: 40px;
+        padding: 0;
+        border: 2px solid #555;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    ```
+
+- 下面是一个日期选择器示例
+
+    ```html
+    <link rel="stylesheet" href="styles.css" />
+
+    <form>
+        <label for="birthdate">Select your birthdate:</label>
+        <input type="date" id="birthdate" name="birthdate" />
+    </form>
+    ```
+
+    ```css
+    input {
+        padding: 8px 12px;
+        margin: 8px 0;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    input[type='date'] {
+        padding: 6px 10px;
+        border: 2px solid #555;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    input[type='date']::-webkit-calendar-picker-indicator {
+        background-color: #4caf50;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    ```
+
+使用这些复杂的元素时，手动设置样式也存在丢失重要功能的风险。不仅可能丢失焦点状态或选中项等重要指示器，甚至可能完全破坏选择器。正因如此，许多开发者完全依赖 JavaScript 库或自定义组件，而不是使用浏览器的内置组件。
