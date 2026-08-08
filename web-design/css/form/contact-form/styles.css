@@ -1,0 +1,39 @@
+.form-container {
+  background-color: whitesmoke;
+  border-radius: 10px;
+  width: 60%;
+  min-width: 400px;
+  padding: 10px 20px;
+  margin: 0 auto;
+}
+
+label {
+  margin: 10px 0 0 0;
+  color: #1f1f1f;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input,textarea {
+  width: 100%;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: midnightblue;
+  color: orange;
+  font-size: 1.1rem;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+
+button:hover {
+  background-color: lightblue;
+  color: darkgoldenrod;
+  cursor: pointer;
+}
