@@ -1,0 +1,60 @@
+h1 {
+  text-align: center;
+}
+
+.container {
+  background-color: rgb(255, 255, 255);
+  padding: 10px 0;
+}
+
+.marker {
+  width: 200px;
+  height: 25px;
+  margin: 10px auto;
+}
+
+.cap {
+  width: 60px;
+  height: 25px;
+}
+
+.sleeve {
+  width: 110px;
+  height: 25px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-left: 10px double rgba(0, 0, 0, 0.75);
+}
+
+.cap, .sleeve {
+  display: inline-block;
+}
+
+.red {
+  background: linear-gradient(rgb(122, 74, 14), rgb(245, 62, 113), rgb(162, 27, 27));
+
+  /** box-shadow 的 5 个参数: offsetX offsetY blurRadius spreadRadius color 
+   *   	offsetX 表示阴影在 X 轴方向的偏移，正数表示向右偏移，负数表示向左偏移
+   *   	offsetY 表示阴影在 Y 轴方向的偏移，正数表示向下偏移，负数表示向上偏移
+   *   	blurRadius 表示阴影的模糊半径，0表示没有模糊，阴影边缘很锐利
+   *   	spreadRadius 可以扩大阴影范围
+   *   	color 表示阴影颜色
+   *
+   * */
+  box-shadow: 0 0 20px 0 rgba(83, 14, 14, 0.8);
+}
+
+.green {
+  background: linear-gradient(#55680D, #71F53E, #116C31);
+  box-shadow: 0 0 20px 0 #3B7E20CC;
+}
+
+.blue {
+	/*
+	 * h: 色相，取值范围 0 - 360
+	 * s：饱和度，取值 0 - 100%，饱和度越大颜色越鲜艳
+	 * l: 亮度，取值 0 - 100%，0 为黑色，100%为白色，50%为正常色调
+	 * */
+  background: linear-gradient(hsl(186, 76%, 16%), hsl(223, 90%, 60%), hsl(240, 56%, 42%));
+  box-shadow: 0 0 20px 0 hsla(223, 59%, 31%, 0.8);
+}
+
