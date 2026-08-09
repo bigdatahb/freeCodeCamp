@@ -2105,3 +2105,332 @@ element {
     ```
 
 使用这些复杂的元素时，手动设置样式也存在丢失重要功能的风险。不仅可能丢失焦点状态或选中项等重要指示器，甚至可能完全破坏选择器。正因如此，许多开发者完全依赖 JavaScript 库或自定义组件，而不是使用浏览器的内置组件。
+
+## 盒式模型
+
+### 溢出 Overflow
+
+溢出是指元素处理超出其自身大小的内容的方式。例如， `div` 元素的文本内容可能会溢出其边界。
+
+溢出是二维的，x 轴决定水平溢出，y 轴决定垂直溢出。
+
+我们可以使用 `overflow-y` 来解决垂直溢出问题：
+
+```html
+<link rel="stylesheet" href="styles.css" />
+
+<div>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+</div>
+```
+
+```css
+div {
+    height: 200px;
+    /** 对于垂直方向，溢出的部分不显示 */
+    overflow-y: hidden;
+}
+```
+
+我们还可以使用滚动条来让元素可以滚动，以此来访问溢出的部分内容：
+
+```css
+div {
+    height: 200px;
+    /** 让 div 可以在垂直方向进行滚动 */
+    overflow-y: scroll;
+}
+```
+
+### transform
+
+前面我们已经使用过 `transform` 属性了，它允许您在不影响其他元素布局的情况下修改网页上元素的视觉呈现方式。
+
+`transform` 属性能够对元素应用各种变换，例如在二维或三维空间中旋转、缩放、倾斜或平移（移动）它们。
+
+其 **工作原理** 是对元素的坐标系应用数学变换。
+
+假设我们有如下一个 div 元素:
+
+```html
+<link rel="stylesheet" href="styles.css" />
+
+<div class="box"></div>
+```
+
+```css
+body {
+    border: 2px solid black;
+}
+
+.box {
+    width: 200px;
+    height: 200px;
+    background-color: red;
+}
+```
+
+- `translate`
+
+    我们对具有红色背景的 div 进行位置移动:
+
+    ```css
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        /** translate 函数可以移动元素，这里是向右移动 50px, 向下移动 100px */
+        transform: translate(50px, 100px);
+    }
+    ```
+
+- `rotate`
+
+    `rotate()` 可以让元素绕固定点进行旋转
+
+    ```css
+    .box {
+        margin: 100px;
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        /** 顺时针旋转 45 度 */
+        transform: rotate(45deg);
+    }
+    ```
+
+- `scale`
+
+    `scale()` 函数可以对元素的大小进行缩放
+
+    ```css
+    .box {
+        margin: 100px;
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        /** 宽度变为原来的 1.5 倍, 高度变为原来的 2 倍 */
+        transform: scale(1.5, 2);
+    }
+    ```
+
+可以对同一个元素同时应用多个变换：
+
+```css
+.box {
+    margin: 100px;
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    /** 将当前元素向右移动 50px, 向下移动 50px, 按顺时针旋转 45 度, 宽高放大为原来的 1.5 倍 */
+    transform: translate(50px, 50px) rotate(45deg) scale(1.5);
+}
+```
+
+### 盒式模型
+
+CSS 盒模型是 Web 开发中的一个基本概念。它定义了 HTML 元素的结构和定位方式。如果您理解了这个模型，您就能控制网站元素的大小、间距和外观。
+
+在 CSS 盒模型中，每个元素都被一个盒子包裹着。这个盒子由四个元素组成：
+
+- **内容区域**， 盒模型的最内层不分，用于存放元素的实际内容（文本、图像等）
+
+- **内边距**， 内容区域与边框之间的部分，可以通过 `padding` 属性来指定内边距
+
+- **边框**， 元素的外部边缘或轮廓，可以使用 `border` 属性来自定义边框样式
+    - `border` 属性是一个简写属性，它是 `border-width`， `border-style` 和 `border-color` 三个属性的简写
+
+    - 如果要为上、右、下、左四条边框分别指定样式，最好使用具体的属性:
+
+        ```css
+        div {
+            /** 这里每个属性指定了 4 个值，按顺时针方向从上开始应用 */
+            border-width: 2px 4px 7px 12px;
+            border-style: dashed solid solid dashed;
+            border-color: blue red green black;
+        }
+        ```
+
+- **外边距**，元素边框之外的部分，可以使用 `margin` 属性来定义外边距
+
+我们可以通过浏览器的开发者工具，选定一个元素，查看 `computed` 标签页，来近距离感受盒模型
+
+### 外边距折叠 Margin Collapsing
+
+当相邻元素的 **垂直边距重叠** 时，就会出现这种现象，从而形成一个等于两者中较大值的单一外边距。
+
+在 CSS 中，当两个垂直边距相互接触时，它们会相互折叠。这意味着较大的边距不会叠加，而是占据主导地位，决定元素之间的间距。
+
+这种行为仅适​​用于 **垂直边距（上边距和下边距）**
+
+```html
+<style>
+    .box1 {
+        margin-bottom: 20px;
+        background-color: lightblue;
+    }
+    .box2 {
+        margin-top: 30px;
+        background-color: lightgreen;
+    }
+</style>
+
+<div class="box1">Box 1</div>
+<div class="box2">Box 2</div>
+```
+
+父元素与其第一个或最后一个子元素也可能发生外边距折叠
+
+我们可以通过开发者工具，发现 box1 和 box2 在垂直方向的间距为 `30px`，这是因为发生了 Margin Collapsing
+
+**如果一个元素没有内容、内边距或边框，它的上外边距和下外边距可以折叠成一个外边距**。
+
+### content-box 和 border-box
+
+`box-sizing` 属性可以设置为 `content-box` 或者 `border-box` 以控制元素的宽度和高度的计算方式。
+
+一般在通用选择器上来设置这个属性:
+
+```css
+* {
+    box-sizing: border-box;
+}
+```
+
+`box-sizing` 属性的默认值为 `content-box` ，但您可以根据需要选择 `border-box`
+
+- 在 `content-box` 模型中，您为元素设置的宽度和高度决定了内容区域的尺寸，但不包括内边距、边框或外边距。当您需要精确控制内容区域时，请使用 `content-box` 。设置 `width` 和 `height` 时，您实际上只是在设置内容本身的大小。
+    - 要计算元素的总宽度，需要加上左右内边距和左右边框。同样，元素的总高度可以通过加上内容高度、上下内边距和上下边框来计算。
+
+- 在 `border-box` 模型中，您设置的 `width` 和 `height` 将成为元素的总尺寸：内容 + 内边距 + 边框；外边距则不包含在内。
+    - `border-box` 在响应式布局中很有用
+
+```html
+<link rel="stylesheet" href="styles.css" />
+<div class="box" id="red-div"></div>
+<div class="box" id="blue-div"></div>
+```
+
+```css
+.box {
+    width: 300px;
+    height: 200px;
+    padding: 20px;
+    border: 4px solid black;
+    margin: 10px;
+}
+
+#red-div {
+    /** 使用 content-box 模型，元素的宽 = 300px + 20px + 4px, 高 = 200px + 20px + 4px */
+    box-sizing: content-box;
+    background-color: red;
+}
+
+#blue-div {
+    /** 使用 border-box 模型, 元素的宽高就是 300px 200px */
+    box-sizing: border-box;
+    background-color: blue;
+}
+```
+
+### filter
+
+CSS `filter` 属性是一个强大的工具，它允许您对网页上的元素应用图形效果。它尤其适用于调整图像、背景甚至文本的视觉呈现效果，而无需修改原始资源。
+
+可以使用 filter 属性创建各种效果，例如模糊、颜色偏移和对比度调整。
+
+基本语法:
+
+```css
+selector {
+    filter: function(amount);
+}
+```
+
+- `blur`
+
+    比如，我们要对一张图片应用模糊效果:
+
+    ```css
+    img {
+        filter: blur(2px);
+    }
+    ```
+
+    `blur` 函数会对元素应用高斯模糊，模糊程度以像素为单位指定，代表模糊半径。
+
+- `brightness`
+
+    `brightness` 函数用于调整元素的亮度。值为 `0%` 时，元素将完全变黑；值大于 `100%` 时，亮度会增加:
+
+    ```css
+    img {
+        filter: brightness(150%);
+    }
+    ```
+
+- `grayscale`
+
+    `grayscale` 函数将元素转换为灰度图像。转换程度以百分比表示， `100%` 表示完全灰度， `0%` 表示图像保持不变。
+
+    ```css
+    img {
+        filter: grayscale(100%);
+    }
+    ```
+
+    `grayscale` 可用于营造复古效果或弱化页面上的某些元素。
+
+- `sepia`
+
+    `sepia` 函数会将元素应用棕褐色调，棕褐色效果非常适合营造复古或怀旧的风格。
+
+    ```css
+    img {
+        filter: sepia(80%);
+    }
+    ```
+
+- `hue-rotate`
+
+    `hue-rotate` 函数用于对元素应用色调旋转。该值以度为单位，表示围绕色环的旋转角度
+
+    ```css
+    img {
+        /** 此规则将图像元素的色调旋转 90 度 */
+        filter: hue-rotate(90deg);
+    }
+    ```
+
+    色调旋转可用于创建迷幻效果或调整图像的整体配色方案。
+
+- 其他功能函数
+
+    `contrast` , `invert`, `saturate`
+
+`filter` 属性最强大的功能之一是能够组合多个效果。您可以通过空格分隔，将多个筛选器应用于同一元素：
+
+```css
+img {
+    filter: contrast(150%) brightness(110%) sepia(30%);
+}
+```
