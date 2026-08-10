@@ -2434,3 +2434,208 @@ img {
     filter: contrast(150%) brightness(110%) sepia(30%);
 }
 ```
+
+## Flexbox 弹性布局
+
+### 什么是 Flexbox
+
+CSS Flexbox 是一种 **一维** 布局模型，它允许您在容器内按行或列排列元素。您还可以控制它们的顺序和方向。
+
+Flexbox 常被用来创建响应式页面
+
+我们称 Flexbox 为一维布局模型，是因为它一次只专注于沿单个轴排列元素。该轴可以是水平轴，也可以是垂直轴。
+
+#### flex container
+
+我们把采用弹性布局（flex layout）的 HTML 元素称作 **弹性容器（flex container）**
+
+要将 HTML 元素设置为弹性容器，需要在其 CSS 样式中添加 `display: flex;` 属性
+
+#### flex item
+
+我们将 flex container 的 **直接子元素** 叫做 flex item
+
+flex item 可以根据弹性容器的属性在容器内进行排列和对齐。它们还可以缩小或放大以适应可用空间。
+
+#### 代码演示弹性布局
+
+- 默认布局
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Hello, World!</title>
+            <link rel="stylesheet" href="styles.css" />
+            <style>
+                div p {
+                    color: red;
+                }
+            </style>
+        </head>
+        <body>
+            <main>
+                <div id="first-div"></div>
+                <div id="second-div"></div>
+                <div id="third-div"></div>
+            </main>
+        </body>
+    </html>
+    ```
+
+    ```css
+    div {
+        width: 80px;
+        height: 50px;
+    }
+
+    #first-div {
+        background-color: #4d70b2;
+    }
+
+    #second-div {
+        background-color: #5c4db2;
+    }
+
+    #third-div {
+        background-color: #4da3b2;
+    }
+    ```
+
+    因为 `<div>` 是块级元素，因此各个 `<div>` 各占一行
+
+- 使用弹性布局
+
+    ```css
+    main {
+        display: flex;
+    }
+    ```
+
+    将 `<main>` 元素设置为弹性容器，`<main>` 中的三个 `<div>` 都成为弹性元素（flex item），这时，三个 div 都会排列在同一行，如果 `<main>` 不够大，这三个 div 还会自动缩小
+
+    默认情况下，弹性容器将是一个块级元素，因此容器本身相对于其他元素和容器将位于其自己的一行中。
+
+### 弹性布局相关属性
+
+每个弹性容器都有两个轴：
+
+- main axis, 主轴
+
+- cross axis, 侧轴/交叉轴
+
+默认情况下，**弹性容器的主轴为水平方向，交叉轴为垂直方向**。弹性容器中的元素按主轴方向进行排列。
+
+- 设置主轴方向
+
+    `flex-direction` 属性可以设置主轴方向
+
+    它的默认值是 `row`, 将所有 flex 项目放置在同一行，方向与浏览器的默认语言方向一致（从左到右或从右到左）：
+
+    ```css
+    main {
+        display: flex;
+        flex-direction: row; /* Default */
+    }
+    ```
+
+    如果要反转主轴行中的元素，可以使用: `flex-direction: row-reverse;`
+
+    ```css
+    main {
+        display: flex;
+        flex-direction: row-reverse; /** 反转排列 */
+    }
+    ```
+
+    将主轴设置为垂直方向:
+
+    ```css
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+    ```
+
+    同样，`column` 也有一个反转元素的 `column-reverse`
+
+- `flex-wrap`
+
+    该属性决定了弹性项目在弹性容器内的换行方式，以适应可用空间。
+
+    `flex-wrap` 有 3 个取值: `nowrap`, `wrap`, `wrap-reverse`
+
+    默认值是 `nowrap`, 表示即使是弹性元素的宽度超出弹性容器的宽度，他们也不会换行显示
+
+    ```css
+    main {
+        width: 200px;
+        display: flex;
+        flex-direction: row; /* Default */
+
+        /** 三个 div 的总宽度超过 200px, 但是他们不会换行，而是通过缩小的方式来适应可用空间 */
+        flex-wrap: nowrap; /* Default */
+    }
+    ```
+
+    如果希望它们在宽度超过容器时自动换行，可以在 flex container 上设置 `flex-wrap: wrap`:
+
+    ```css
+    main {
+        width: 200px;
+        display: flex;
+        flex-direction: row; /* Default */
+        flex-wrap: wrap;
+        border: 2px solid red;
+    }
+    ```
+
+    `wrap-reverse` 也会换行，不过是根据 `wrap` 反着排列
+
+- `flex-flow`
+
+    `flex-flow` 是 `flex-direction` 和 `flex-wrap` 的简写属性
+
+    ```css
+    main {
+        width: 200px;
+        display: flex;
+        /** 使用 flex-flow 同时设置 flex-direction 和 flex-wrap */
+        flex-flow: column wrap-reverse;
+        border: 2px solid red;
+    }
+    ```
+
+- `justify-content`
+
+    该属性会使子元素沿着弹性容器的主轴对齐。
+
+    主要取值：
+    - `flex-start`, 沿主轴起点对齐
+
+    - `flex-end`, 沿主轴终点对齐
+
+    - `center`, 沿主轴居中对齐
+
+    - `space-between`, 沿主轴均匀分布
+
+    - `space-around`, 沿主轴均匀分布，但是会在第一个弹性元素之前和最后一个弹性元素之后添加空白，空白量是相邻的 flex item 之间距离的一半。如果只有一个弹性元素，则居中显示
+
+    - `space-evenly`, 沿主轴均匀分布，元素之间的间距与首尾元素前后的间距完全相同
+
+    注意 `space-between` 和 `space-around` 以及 `space-evenly` 的区别，核心区别在于第一个弹性元素前面和最后一个弹性元素后面是否有间距，以及间距的多少
+
+- 沿交叉轴的对齐方式
+
+    `align-items` 属性设置弹性元素沿交叉轴的排列布局
+
+    主要取值：
+    - `center`, 沿交叉轴居中
+
+    - `flex-start`, 与交叉轴的起始位置对齐
+
+    - `flex-end`, 与交叉轴的末端对齐
+
+    - `stretch`, 弹性元素将沿交叉轴方向拉伸以填充容器。
+
+    - `align-self`, 为单个 flex item 指定不同的交叉轴对齐方式
