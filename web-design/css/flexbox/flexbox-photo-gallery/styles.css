@@ -1,0 +1,52 @@
+* {
+  /* 使用 border-box 计算模型， 默认的是 content-box 模型 */
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f5f6f7;
+}
+
+.header {
+  text-align: center;
+  /* 文本转大写 */
+  text-transform: uppercase;
+  padding: 32px;
+  background-color: #0a0a23;
+  color: #fff;
+  border-bottom: 4px solid #fdb347;
+}
+
+.gallery {
+  display: flex;
+  /* 主轴为水平方向 */
+  flex-direction: row;
+  /* 自动换行 */
+  flex-wrap: wrap;
+  /* 在主轴方向居中 */
+  justify-content: center;
+  /* 在交叉轴也居中 */
+  align-items: center;
+  /* 设置元素之间的间距，是 row-gap 和 column-gap 的简写属性 */
+  gap: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 10px;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 350px;
+  height: 300px;
+  /* 设置图片填充容器的方式 */
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.gallery::after {
+  content: "";
+  width: 350px;
+}
+
