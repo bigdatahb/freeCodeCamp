@@ -2643,3 +2643,208 @@ flex item 可以根据弹性容器的属性在容器内进行排列和对齐。�
 - `flex`
 
     flex 属性控制柔性容器内元素的大小和行为。它由三个属性组成： `flex-grow` 、 `flex-shrink` 和 `flex-basis`
+
+## 排版 Typography
+
+### 排版基础
+
+排版是一门艺术，它通过选择合适的字体和格式，使文本在视觉上更具吸引力且易于阅读。
+
+**字型（typeface）** 是指一组字符、数字和符号的整体设计和风格，它就像一个字体系列的蓝图。
+
+**字体（font）** 是字型的一个具体实例，具有特定的特征，例如大小、粗细、样式和宽度。
+
+两种非常重要的字型:
+
+- 衬线字型, Serif
+    - 衬线字型风格古典，字尾带有细小的线条。衬线字体常用于印刷材料，例如书籍。
+
+    - `Times New Roman`、`Georgia` 和 `Garamond` 都是衬线字体
+
+- 无衬线字型, Sans Serif
+    - 无衬线字型更具现代感，字符末端没有细线。
+    - 无衬线字型常用于数字设计，因为它们在屏幕上易于阅读。例如 `Helvetica`、`Arial` 和 `Roboto`。
+
+排版的基本要素：
+
+- **基线（baseline）**
+
+    基线是排版中一条假想的水平线
+
+    <img src="imgs/05.png" style="max-width: 400px;" alt="An image explaining what a baseline is"><br>
+
+- **大写字高（Cap Height）**
+
+    Cap Height 是指从基线到大写字母顶部的高度
+
+    <img src="imgs/06.png" style="max-width: 400px;" alt="An image explaining what a baseline is"><br>
+
+- **小写字高（X-height）**
+
+    小写字母平均高度，不包括升部和降部
+
+    <img src="imgs/07.png" style="max-width: 400px;" alt="An image explaining what a baseline is"><br>
+
+- **升部 Assender**
+
+    升部是指小写字母中超出 x-height 部分的高度
+
+    <img src="imgs/08.png" style="max-width: 400px;" alt="An image explaining what a baseline is"><br>
+
+- **降部 Descender**
+
+    降部是指小写字母中延伸到基线以下的部分
+
+    <img src="imgs/09.png" style="max-width: 400px;" alt="An image explaining what a baseline is"><br>
+
+- **行距 Leading**
+
+    行距是指文本行之间的垂直距离，从一行的基准线到下一行的基准线之间的距离
+
+    <img src="imgs/10.png" style="max-width: 400px;" alt="An image explaining what a baseline is"><br>
+
+### font-family
+
+我们把一组具有相同设计的字体成为字体家族（font family），字体家族中的所有字体都是基于相同的核心字体开发出来的，他们只是在样式、粗细、宽度上有所不同。
+
+在 CSS 中，可以通过 `font-family` 属性来设置字体族：
+
+```css
+#arial-font {
+    font-family: Arial;
+}
+```
+
+一般来讲，我们不会只设置一种字体，因为有可能有的客户端没有这种字体，为了尽可能的正确渲染字体，我们会同时指定多个字体：
+
+```css
+#specified-font {
+    font-family: Arial, Lato;
+}
+```
+
+同时指定多个字体，并不是找到一个可用字体就不找了，其工作原理是：即使第一个字体可用，选择过程也不会停止。字体系列是逐个字符选择的，因此如果某个字体缺少特定字符，浏览器会在优先级较低的字体中查找。
+
+在网页开发中，一般我们会在最后指定一个 **通用字体族（Generic font families）**，为了确保在优先级更高的字体不可用时，内容仍然可读，浏览器会根据指定的通用字体族，将原始字体替换为最合适的字体。
+
+常用的通用字体族：
+
+- serif
+
+    常用的衬线字体:
+    - Times New Roman
+    - Georgia
+
+- sans-serif
+
+    一些常见的无衬线字体：
+    - Arial
+    - Verdana
+    - Trebuchet MS
+
+- monospace
+
+- cursive
+
+- fantasy
+
+```css
+#specified-font {
+    font-family: Arial, Lato, sans-serif;
+}
+```
+
+Arial 字体优先级最高。如果找不到 Arial 字体，浏览器将尝试渲染 Lato 字体。如果两种字体都找不到，浏览器将使用通用的无衬线字体族，从用户系统已安装的字体中选择符合这些特征的字体。
+
+### 网页安全字体
+
+网页安全字体是指计算机或设备上很可能已安装的字体子集。
+
+浏览器负责解析和显示网站上的字体。当浏览器需要渲染某个字体时，它会尝试在用户的系统中查找字体文件。但如果找不到该字体，通常会回退到系统默认字体。这样即使网站上缺少所需的特定字体，也能确保内容的可读性。
+
+浏览器选择的备用字体可能与最初预期的字体截然不同。这会对整体设计和用户体验产生严重影响。为避免这种情况，应尽可能使用网页安全字体。您有两种选择：要么将其用作主要字体，要么使用自定义字体，并将网页安全字体作为备用选项。这样，您就可以控制在找不到自定义字体时网站的显示效果。
+
+### @font-face
+
+`@font-face` 是 CSS 中的一种 at 规则， at 规则是向浏览器提供指令的语句。常见的 at 规则有 媒体查询、关键帧等
+
+使用 `@font-face` ，您可以指定字体文件、格式​​以及其他重要属性（例如字重和样式）来定义自定义字体。
+
+基本语法:
+
+```css
+@font-face {
+    /* Descriptors */
+}
+```
+
+但要使 `@font-face` 规则有效，还需要指定 `src` 包含对字体资源的引用:
+
+```css
+@font-face {
+    font-family: 'MyCustomFont';
+    /** format 是可选的 */
+    src:
+        url('path/to/font.woff2') format('woff2'),
+        url('path/to/font.otf') format('opentype'),
+        url('path/to/font.woff') format('woff');
+}
+```
+
+如果规则生效，我们就可以在 CSS 样式表中使用自定义的字体了：
+
+```css
+body {
+    font-family: 'MyCustomFont';
+}
+```
+
+### 使用 Font Squirrel 和 Google Fonts 等外部字体
+
+Google Fonts 和 Font Squirrel 是常用的在线资源，可用于查找和使用免费字体，尤其适用于网页开发。
+
+导入谷歌字体的两种方式：
+
+- 使用 `link` 元素
+
+    ```html
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet"
+    />
+    ```
+
+- 使用 `@import`
+
+    ```css
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+    ```
+
+### text-shadow
+
+与 `box-shadow` 类似， `text-shadow` 可以为文本添加阴影效果
+
+基本语法:
+
+```css
+p {
+    /** 
+        offsetX 正数表示向右，负数表示向左
+        offsetY 正数表示向下，负数表示向上
+    */
+    text-shadow: offsetX offsetY blurRadius color;
+}
+```
+
+可以同时为一个元素指定多个阴影：
+
+```css
+p {
+    text-shadow:
+        3px 2px 3px #00ffc3,
+        -3px -2px 3px #0077ff,
+        5px 4px 3px #dee7e5;
+}
+```
