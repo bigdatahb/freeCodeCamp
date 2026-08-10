@@ -2639,3 +2639,7 @@ flex item 可以根据弹性容器的属性在容器内进行排列和对齐。�
     - `stretch`, 弹性元素将沿交叉轴方向拉伸以填充容器。
 
     - `align-self`, 为单个 flex item 指定不同的交叉轴对齐方式
+
+- `flex`
+
+    flex 属性控制柔性容器内元素的大小和行为。它由三个属性组成： `flex-grow` 、 `flex-shrink` 和 `flex-basis`
