@@ -1,0 +1,47 @@
+html {
+  /* 设置根元素字体大小 */
+  font-size: 24px;
+}
+
+.newspaper {
+  font-size: 16px;
+  /* 需要引入 Google Font Open Sans */
+  font-family: "Open Sans", sans-serif;
+}
+
+.name {
+  font-size: 2rem;
+  font-family: "Times New Roman", serif;
+}
+
+.name, .author {
+  /* 将文本转换为大写 */
+  text-transform: uppercase;
+}
+
+.headline {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.sub-headline {
+  font-weight: 100;
+  font-size: 1.5em;
+  font-style: italic;
+}
+
+.author {
+  font-weight: bold;
+}
+
+.text {
+  /* 设置文本缩进及行高 */
+  text-indent: 20px;
+  line-height: 2em; /* 父元素字体大小的 2 倍 */
+}
+
+/* 设置第一个字母的样式 */
+.text::first-letter {
+  font-size: 2em;
+  font-weight: bold;
+}
