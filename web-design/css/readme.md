@@ -2848,3 +2848,76 @@ p {
         5px 4px 3px #dee7e5;
 }
 ```
+
+## Accessibility
+
+### 检查对比度的工具
+
+- WebAIM 是一个在线检测工具，比如检查对比度: https://webaim.org/resources/contrastchecker/
+
+- TPGi 颜色对比度分析器，这是一款桌面应用程序，它不仅可以分析单个颜色对，还可以分析整个网页。
+
+### 隐藏内容最佳实践
+
+在网页开发中，隐藏内容是一种常见的做法，但至关重要的是，必须以不影响可访问性的方式进行隐藏。
+
+不同的隐藏技术会对辅助技术如何解读和呈现内容产生不同的影响。
+
+- 一种常见的隐藏内容的方法是使用 `display: none`
+
+    ```html
+    <link rel="stylesheet" href="styles.css" />
+    <p class="hidden">Hidden text</p>
+    <p>Visible text</p>
+    ```
+
+    ```css
+    .hidden {
+        display: none;
+    }
+    ```
+
+    虽然这样做可以有效地隐藏视觉内容，但同时也将其从辅助功能树中移除。
+
+    使用 `display: none` 表示屏幕阅读器和其他辅助技术将无法访问此内容，因为它未包含在辅助功能树中。因此，仅当您想要完全从视觉呈现和辅助功能中移除内容时，才应使用此方法。
+
+- 另一种隐藏内容的方法是使用 `visibility: hidden` ：
+
+    ```html
+    <link rel="stylesheet" href="styles.css" />
+    <p class="hidden">Hidden text</p>
+    <p>Visible text</p>
+    ```
+
+    ```css
+    .hidden {
+        visibility: hidden;
+    }
+    ```
+
+    `visibility: hidden` 会隐藏内容的视觉效果，但仍保留在文档流中，这意味着它仍然占据页面空间。
+
+    与 `display: none` 类似， `visibility: hidden` 也会将内容从辅助功能树中移除。这意味着屏幕阅读器等辅助技术将无法访问隐藏的内容。
+
+- 视觉隐藏/仅屏幕阅读 技术
+
+    ```html
+    <link rel="stylesheet" href="styles.css" />
+    <p class="sr-only">Hidden text</p>
+    <p>Visible text</p>
+    ```
+
+    ```css
+    /** 只是在视觉上隐藏了，文档流中还是有这个元素 */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+    ```
