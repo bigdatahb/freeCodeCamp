@@ -2921,3 +2921,353 @@ p {
         border: 0;
     }
     ```
+
+## 定位
+
+### 浮动 float
+
+CSS 中的浮动（float）技术最初是为了让文本环绕元素（例如图像）而设计的。然而，随着时间的推移，开发者们发现了浮动的新用途，并将其创造性地应用于布局设计中。虽然像 Flexbox 和 Grid 这样的现代布局方法现在更为常用，但理解浮动仍然很重要，尤其是在处理旧代码或需要实现特定布局效果时。
+
+当一个元素被浮动时，它会脱离正常的文档流，并被推到其容器的左侧或右侧。后面的内容会环绕浮动元素，填充剩余的空间。
+
+一个典型的浮动应用场景是将文本环绕在图像周围
+
+使用浮动时，必须处理子元素浮动时父元素折叠的问题。clearfix 技术可以解决这个问题：
+
+```html
+<div class="container">
+    <img src="https://placehold.co/150x150" alt="Placeholder Image" />
+    <p>This is an example of text flowing around a floated image.</p>
+</div>
+```
+
+```css
+.container {
+    border: 1px solid black;
+}
+
+/* Clearfix CSS */
+.container::after {
+    content: '';
+    display: block;
+    clear: both; /** clear: both 确保伪元素清除其上方所有浮动元素的两侧。 */
+}
+
+img {
+    float: left;
+    margin-right: 20px;
+}
+```
+
+clearfix 技术确保父元素正确地包裹其浮动子元素。Clearfix 通过在浮动内容后添加 clear 属性，强制父容器“看到”浮动子元素。
+
+虽然由于 Flexbox 和 Grid 等更现代技术的出现，浮动不再是复杂布局的首选方法，但在某些情况下，它仍然发挥着至关重要的作用。
+
+### 相对定位 Relative Position
+
+在 CSS 中，定位允许我们控制元素在页面上的布局方式。两种常见的定位类型是 **静态定位** 和 **相对定位**。默认情况下，元素采用静态定位。这意味着它们会遵循文档的正常流程，从上到下、从左到右依次排列。
+
+静态定位是所有元素的默认定位方式，无需在 CSS 中进行任何特殊声明。
+
+相对定位允许元素偏离其默认位置，而 **不会中断文档的正常流程**。您可以将其理解为通过赋予元素新的坐标来使其偏离默认的静态位置。以下是应用相对定位的方法：
+
+```html
+<link rel="stylesheet" href="styles.css" />
+<p class="relative">This paragraph is positioned relatively.</p>
+```
+
+```css
+body {
+    border: solid 1px black;
+}
+
+.relative {
+    position: relative;
+    top: 30px;
+    left: 30px;
+}
+```
+
+在这个例子中，段落会从原来的位置向下移动 `30px` ，向右移动 `30px`
+
+### 绝对定位 Absolute Position
+
+绝对定位允许你将元素 **从正常的文档流中分离出来**，使其独立于其他元素运行。
+
+当元素进行绝对定位时，它会被放置在一个 **单独的图层** 中，与布局中的其他所有内容 **完全分离**。
+
+绝对定位非常适合创建浮动 UI 功能，例如模态框、工具提示或下拉菜单，这些功能可以与页面上的其他元素重叠。
+
+默认情况下，绝对定位元素相对于 **最近的已定位祖先元素** 进行定位。如果找不到已定位祖先元素，则元素将相对于其 **初始包含块**（通常是浏览器视口）进行定位。
+
+需要注意最近的已定位祖先元素，表示的是不是 `static` 定位的祖先元素
+
+```html
+<div class="positioned">Absolutely Positioned</div>
+```
+
+```css
+body {
+    background-color: #eeeeee;
+}
+
+.positioned {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background-color: coral;
+}
+```
+
+应用此代码后，该元素将从正常的文档流中移除，并放置在距离其包含块的顶部和左侧 `30px` 的位置。
+
+### 固定定位和粘性定位 Fixed Position and Sticky Position
+
+#### 固定定位
+
+固定定位和粘性定位是两种重要的 CSS 定位策略，它们与绝对定位相比，各自表现出不同的行为。
+
+当元素使用 `position: fixed` 时，它会 **脱离正常的文档流**，并 **相对于视口进行定位**，这意味着即使用户滚动页面，它的位置也保持不变。这通常用于需要始终保持可见的元素，例如标题或导航栏。
+
+例如，如果您希望标题始终固定在页面顶部，可以使用以下代码：
+
+```html
+<h1>Fixed Header</h1>
+
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
+    Praesent libero. Sed cursus ante dapibus diam.
+</p>
+<p>
+    Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.
+    Praesent mauris.
+</p>
+<p>
+    Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia
+    arcu eget nulla.
+</p>
+<p>
+    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+    inceptos himenaeos.
+</p>
+<p>
+    Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur
+    tortor.
+</p>
+<p>
+    Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas
+    mattis.
+</p>
+<p>
+    Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.
+    Morbi lectus risus.
+</p>
+<p>
+    Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu
+    ullamcorper orci.
+</p>
+<p>
+    Quisque eget odio ac lectus vestibulum faucibus eget in metus. In
+    pellentesque faucibus vestibulum.
+</p>
+<p>
+    Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet
+    egestas purus in blandit.
+</p>
+```
+
+```css
+body {
+    margin: 0;
+    padding-top: 60px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+h1 {
+    position: fixed;
+    top: 0;
+    width: 500px;
+    background: white;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+}
+
+p {
+    max-width: 600px;
+    margin: 20px auto;
+}
+```
+
+#### 粘性定位
+
+`position: sticky` 是一种介于相对定位和固定定位之间的混合定位方式。
+
+初始状态下，元素表现得像相对定位一样，始终位于文档流中。但是，一旦用户将元素滚动到一定位置之后，它就会“粘”在视口（通常是顶部），表现得像固定定位一样。
+
+```html
+<section>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec
+        odio. Praesent libero. Sed cursus ante dapibus diam.
+    </p>
+    <p>
+        Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis
+        ipsum. Praesent mauris.
+    </p>
+    <p>
+        Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum
+        lacinia arcu eget nulla.
+    </p>
+    <p>
+        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+        inceptos himenaeos.
+    </p>
+</section>
+<section>
+    <h1>Sticky Header</h1>
+    <p>
+        Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.
+        Curabitur tortor.
+    </p>
+    <p>
+        Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas
+        mattis.
+    </p>
+    <p>
+        Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.
+        Morbi lectus risus.
+    </p>
+    <p>
+        Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc
+        eu ullamcorper orci.
+    </p>
+    <p>
+        Quisque eget odio ac lectus vestibulum faucibus eget in metus. In
+        pellentesque faucibus vestibulum.
+    </p>
+    <p>
+        Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet
+        egestas purus in blandit.
+    </p>
+    <p>
+        Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.
+        Curabitur tortor.
+    </p>
+    <p>
+        Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas
+        mattis.
+    </p>
+    <p>
+        Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.
+        Morbi lectus risus.
+    </p>
+    <p>
+        Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc
+        eu ullamcorper orci.
+    </p>
+    <p>
+        Quisque eget odio ac lectus vestibulum faucibus eget in metus. In
+        pellentesque faucibus vestibulum.
+    </p>
+    <p>
+        Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet
+        egestas purus in blandit.
+    </p>
+    <p>
+        Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.
+        Curabitur tortor.
+    </p>
+    <p>
+        Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas
+        mattis.
+    </p>
+    <p>
+        Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.
+        Morbi lectus risus.
+    </p>
+    <p>
+        Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc
+        eu ullamcorper orci.
+    </p>
+    <p>
+        Quisque eget odio ac lectus vestibulum faucibus eget in metus. In
+        pellentesque faucibus vestibulum.
+    </p>
+    <p>
+        Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet
+        egestas purus in blandit.
+    </p>
+</section>
+```
+
+```css
+h1 {
+    position: sticky;
+    top: 30px;
+    left: 30px;
+}
+```
+
+### z-index
+
+CSS 中的 `z-index` 属性用于控制页面上重叠 **定位元素** 的垂直堆叠顺序。
+
+当多个元素彼此堆叠时， `z-index` 值决定哪个元素显示在最上面。`z-index` 值越低，元素在堆叠中的位置就越靠后。
+
+**注意**: `z-index` 仅对 **已定位元素** 有效，这意味着元素的 `position` 必须不能是 `static`，它可以是 `relative`, `absolute`, `fixed` 或 `sticky`
+
+在静态定位（static position）下，如果设置 `margin` 为负数，有可能造成元素重叠，但是我们不能通过 `z-index` 来控制其堆叠顺序，静态定位的堆叠只能由文档流进行控制
+
+`z-index` 的默认值是 `auto`
+
+```html
+<div class="container">
+    <!-- 我们使用 z-index 来控制这 3 个盒子的堆叠顺序 -->
+    <div class="box1">Box 1</div>
+    <div class="box2">Box 2</div>
+    <div class="box3">Box 3</div>
+</div>
+```
+
+```css
+.container {
+    /** 这里必须设置 .container 为已定位元素，让其子元素的绝对定位的参照物为 .container 
+        当然定位可以是 relative, absolute, fixed 或者 sticky; 这里选择简单的 relative 即可（保持文档流）
+    */
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 1px solid black;
+}
+
+.box1 {
+    position: absolute;
+    z-index: 1;
+    background: lightcoral;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: 100px;
+}
+
+.box2 {
+    position: absolute;
+    z-index: 3;
+    background: gold;
+    top: 40px;
+    left: 40px;
+    width: 100px;
+    height: 100px;
+}
+
+.box3 {
+    position: absolute;
+    z-index: 2;
+    background: lightgreen;
+    top: 60px;
+    left: 60px;
+    width: 100px;
+    height: 100px;
+}
+```
