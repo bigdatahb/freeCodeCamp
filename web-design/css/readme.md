@@ -3271,3 +3271,159 @@ CSS 中的 `z-index` 属性用于控制页面上重叠 **定位元素** 的垂�
     height: 100px;
 }
 ```
+
+## 属性选择器
+
+### 什么是属性选择器
+
+CSS 中的属性选择器是一个强大的工具，它允许你 **根据 HTML 元素的属性** 来定位它们。这意味着你可以为具有特定属性甚至特定属性值的元素应用样式。
+
+当您想要动态设置元素样式，或者仅凭类名无法提供足够的特异性时，它尤其有用。
+
+例如，您可以使用属性选择器来定位所有具有 `href` 属性的链接。
+
+```html
+<a href="https://example.com">Example link with an href attribute</a>
+<a>Example link without an href attribute</a>
+<a href="https://example.com" title="Example link with a title attribute"
+    >Example link with a title attribute</a
+>
+```
+
+```css
+a {
+    display: block;
+}
+
+/** 属性选择器，选择所有具有 href 属性的 a 元素 */
+a[href] {
+    color: blue;
+    text-decoration: underline;
+}
+
+/** 属性选择器，选择所有具有 title 属性的 a 元素 */
+a[title] {
+    font-weight: bold;
+    text-decoration: none;
+}
+```
+
+可以组合使用属性选择器，以获得更精确的设置:
+
+```css
+/** 选择同时具有 href 和 title 属性的 a 元素 */
+a[href][title] {
+    display: block;
+    color: green;
+}
+```
+
+属性选择器还可以选择具有某个特定值的属性的元素:
+
+```html
+<a href="https://example.com" class="btn primary large">Visit Example Site</a>
+```
+
+```css
+a[class~='primary'] {
+    color: red;
+    font-weight: bold;
+}
+```
+
+`attr~=value` 语法表示属性值中是否包含 value; `class~='primary'` 表示 class 属性包含 `primary`
+
+定位属性值以特定值开头的元素:
+
+```css
+/** 
+    ^= 语法表示以 ... 开头
+    这里查找所有 href 属性值以 `https://` 开头的 a 元素
+*/
+a[href^='https://'] {
+    color: green;
+    text-decoration: underline;
+}
+```
+
+定位属性值以特定值结尾的元素:
+
+```css
+/** 
+    $= 语法表示以 ... 结尾
+    这里查找的是所有 href 属性值以 `.com` 结尾的 a 元素
+*/
+a[href$='.com'] {
+    color: darkgreen;
+    text-decoration: underline dotted;
+}
+```
+
+### 定位具有指定 lang 属性和 data-lang 属性的元素
+
+`lang` 是官方标准属性，用于声明内容的语言，对可访问性和 SEO 至关重要
+
+`data-lang` 是开发者自定义的属性，用于存储应用层面的数据，没有标准功能。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <!-- 页面主语言为简体中文 -->
+    <head>
+        <meta charset="utf-8" />
+        <title>Attribute Selector</title>
+    </head>
+    <body>
+        <p>这段是中文。</p>
+        <p lang="en">This paragraph is in English.</p>
+        <!-- 明确声明为英文 -->
+        <p data-lang="en">data-lang is a user define attribute</p>
+    </body>
+</html>
+```
+
+`data-lang` 是一个自定义属性，其用法完全由你决定。
+
+```css
+/** 选择 lang 属性为 en 的 p 元素 */
+p [lang='en'] {
+    color: purple;
+    font-style: italic;
+}
+
+/* 为 data-lang 为 "en" 的段落设置特定样式 */
+p[data-lang='en'] {
+    font-style: italic;
+}
+```
+
+### 定位有序列表元素的 type 属性
+
+在 HTML 中使用有序列表时， `type` 属性允许您指定使用的编号样式，例如数字、字母或罗马数字。
+
+我们可以为有序列表 `ol` 设置 `type` 属性来控制编号样式：
+
+- `1` 代表数字列表
+
+- `A` 代表大写字母列表
+
+- `a` 代表小写字母列表
+
+- `I` 代表大写罗马数字
+
+- `i` 代表小写罗马数字
+
+```html
+<ol type="A">
+    <li>Item 1</li>
+    <li>Item 2</li>
+</ol>
+```
+
+```css
+/** 选择 type 属性为 'A' 的有序列表元素 */
+ol[type='A'] {
+    color: purple;
+    font-weight: bold;
+}
+```
