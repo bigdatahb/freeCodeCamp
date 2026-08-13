@@ -3844,3 +3844,383 @@ body {
         background-color: var(--main-color, #3498db);
     }
     ```
+
+## Grid
+
+### 什么是 CSS Grid
+
+CSS Grid 是一种强大的布局系统，它使 Web 开发人员能够轻松创建复杂且响应迅速的网页布局。
+
+CSS Grid 通过将网页划分为行和列，创建类似网格的结构，简化了这一过程。
+
+```html
+<div class="container">
+    <div class="item">Item 1</div>
+    <div class="item">Item 2</div>
+    <div class="item">Item 3</div>
+    <div class="item">Item 4</div>
+    <div class="item">Item 5</div>
+    <div class="item">Item 6</div>
+</div>
+```
+
+```css
+.container {
+    /* 使用 Grid 布局 */
+    display: grid;
+    /* 创建一个具有三个等宽列的网格 */
+    grid-template-columns: 1fr 1fr 1fr;
+    /* 在每个网格项之间添加了 20 像素的间隙  */
+    gap: 20px;
+}
+
+.item {
+    background-color: lightgray;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+```
+
+与 Flexbox 的区别:
+
+- Flexbox 是一维的，而 Grid 是二维的。
+
+- Flexbox 是内容优先的，这意味着它会根据内容调整布局。而 Grid 则是布局优先的，它允许你先创建布局，然后再将元素放置其中。
+
+- Grid 可以让你更精确地控制元素的放置。你可以精确地指定元素所在的行和列。
+
+Grid 和 Flexbox 各有优势，通常情况下，最佳布局会结合使用这两种布局方式。
+
+### fr 单位
+
+在 Grid 布局中, `grid-template-columns` 可以指定每一列的大小，可以使用百分比指定，也可以使用 `fr` 进行指定:
+
+`fr` 是 fraction 的简写，表示分数或者叫做比数
+
+```html
+<div class="grid-container">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col"></div>
+</div>
+```
+
+```css
+html,
+body {
+    width: 90%;
+    height: 50%;
+}
+
+.grid-container {
+    display: grid;
+    /* 指定每一列的大小都为父元素的 25% */
+    grid-template-columns: 25% 25% 25% 25%;
+    gap: 15px;
+    background-color: darkgray;
+    height: 100%;
+}
+
+.col {
+    background-color: darkslateblue;
+    width: 100%;
+    height: 100px;
+}
+```
+
+我们也可以使用 `fr` 进行指定:
+
+```css
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 15px;
+    background-color: darkgray;
+    height: 100%;
+}
+```
+
+我们也可以指定不同的列具有不同的大小：
+
+```css
+.grid-container {
+    display: grid;
+    /* 总共 6fr, 第2列和第4列占总宽度的 1/3, 第1列和第3列占 1/6 */
+    grid-template-columns: 1fr 2fr 1fr 2fr;
+    gap: 15px;
+    background-color: darkgray;
+    height: 100%;
+}
+```
+
+### 间隙 Gap
+
+在 Grid 布局中，可以使用 `gap`, `row-gap` 和 `column-gap` 指定项之间的间隙
+
+`column-gap` 可以创建列间距，可接受的值包括: `px`, `em/rem`, 百分比 或 `normal` 关键字
+
+`row-gap` 可以创建行间距，可接受的值包括: `px`, `em/rem` 和 百分比
+
+`gap` 属性可以同时指定行间距和列间距，如果只指定一个值，则该值将同时应用于行和列。如果指定2个值，则第一个值将应用于行，第二个值将应用于列。
+
+`gap` 不能使用 `fr` 单位
+
+### repeat()
+
+如果列数太多，我们可以使用 `repeat()` :
+
+```css
+.grid-container {
+    display: grid;
+    /* 4列，每一列都占用相同大小的空间 */
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 10px;
+}
+```
+
+`repeat()` 的第2个参数也可以写多个值：
+
+```css
+.grid-container {
+    display: grid;
+    /* 和 grid-template-columns: 20px 1fr 20px 1fr; 等价 */
+    grid-template-columns: repeat(2, 20px 1fr);
+    column-gap: 10px;
+}
+```
+
+上面的 `repeat(2, 20px 1fr)` 表示第一列和第三列设置为 `20px`, 第2列和第4列设置为 `1fr`, `1fr` 表示剩余可用空间的1等份（总的 fr 数目表示总的可用空间）
+
+### 显示网格和隐式网格
+
+我们通过属性 `grid-template-columns` 或 `grid-template-rows` 定义的网格是显示网格
+
+隐式网格是指浏览器在网格布局中放置项目时自动创建的行和列，控制浏览器隐式创建的列和行的属性是 `grid-auto-columns` 和 `grid-auto-rows`
+
+### minmax()
+
+`minmax()` 函数定义了网格轨道大小的范围，指定了一行或一列可以占据多少空间
+
+可以使用 `px`, `em/rem`, `fr` , 百分比设置网格轨道大小
+
+`minmax()` 函数更进一步，允许您为网格轨道设置最小尺寸和最大尺寸
+
+基本语法:
+
+```css
+minmax(min, max)
+```
+
+网格轨道大小会根据内容和容器大小在 `min` 和 `max` 之间动态调整。
+
+```css
+.grid-container {
+    display: grid;
+    /* 
+        只要父容器可用空间大于 320px, 那么第一列就占 300px 宽度， 第二列占剩下的可用空间
+        如果如容器可用空间小于 320px, 那么第一列就占用可用空间大小，第二列被挤没了；但是第一列最小也要占 150px
+  
+    */
+    grid-template-columns: minmax(150px, 300px) 1fr;
+    gap: 20px;
+}
+```
+
+### grid-column 和 grid-row
+
+`grid-column` 和 `grid-row` 属性允许您指定网格布局中网格项的水平和垂直位置
+
+基本语法:
+
+```css
+grid-row: <start-line> / <end-line>;
+grid-column: <start-line> / <end-line>;
+```
+
+`<start-line>` 是项目开始的网格线， `<end-line>` 是项目结束的网格线。两者都从 1 开始计数
+
+行的网格线是根据 `grid-template-rows` 指定的行数生成的，列的网格线是根据 `grid-template-columns` 指定的列数生成的
+
+同时使用 `grid-template-rows` 和 `grid-template-columns` 的例子:
+
+```html
+<div class="grid">
+    <div class="item1">1</div>
+    <div class="item2">2</div>
+    <div class="item3">3</div>
+    <div class="item4">4</div>
+    <div class="item5">5</div>
+    <div class="item6">6</div>
+    <div class="item7">7</div>
+    <div class="item8">8</div>
+    <div class="item9">9</div>
+    <div class="item10">10</div>
+    <div class="item11">11</div>
+    <div class="item12">12</div>
+</div>
+```
+
+```css
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+    grid-template-rows: repeat(3, 100px); /* 3 equal rows */
+    gap: 10px;
+}
+
+.grid > div {
+    display: grid;
+    place-items: center;
+    background: crimson;
+    color: white;
+    font-size: 4rem;
+}
+```
+
+使用 `grid-column` 让第一行第一列的元素占据 2 个列的宽度:
+
+```css
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+    grid-template-rows: repeat(3, 100px); /* 3 equal rows */
+    gap: 10px;
+}
+
+.grid > div {
+    display: grid;
+    place-items: center;
+    background: crimson;
+    color: white;
+    font-size: 4rem;
+}
+
+.item1 {
+    /* 从 1 开始到 3 结束 */
+    grid-column: 1 / 3;
+}
+```
+
+我们也可以同时指定行和列一起跨多行多列：
+
+```css
+.item1 {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+}
+```
+
+还可以使用 `span` 关键字来指定要跨越多少行多少列：
+
+```css
+.item1 {
+    /* 从 1 开始跨越 2 列 */
+    grid-column: 1 / span 2;
+    /* 从 1 开始跨越 2 行 */
+    grid-row: 1 / span 2;
+}
+
+/* 可以仔细体会 */
+.item7 {
+    grid-column: 2 / span 3;
+}
+
+.item10 {
+    grid-column: 1 / span 3;
+    /* grid-row: 4 / span 2; */
+}
+```
+
+### grid-template-areas
+
+`grid-template-areas` 属性允许您使用命名标签设计可视化的网格布局。
+
+然后，您可以使用 `grid-area` 属性将标签分配给特定的网格项。换句话说，这些命名标签也称为“网格区域名称”。
+
+基本语法:
+
+```css
+grid-template-areas:
+    'header header header'
+    'left-sidebar main right-sidebar'
+    'footer footer footer';
+```
+
+- 每个字符串代表网格中的一行
+
+- 字符串中每个以空格分隔的值都对应一列, 值本身是 grid area 的名称
+
+示例：
+
+```html
+<div class="grid-container">
+    <div class="header">
+        <h2>Header</h2>
+    </div>
+    <div class="sidebar-left">
+        <h2>Left Sidebar</h2>
+    </div>
+    <div class="main"><h2>Main Content</h2></div>
+    <div class="sidebar-right">
+        <h2>Right Sidebar</h2>
+    </div>
+    <div class="footer">
+        <h2>Footer</h2>
+    </div>
+</div>
+```
+
+```css
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        /* header 占第一行（3列宽度） */
+        'header header header'
+        /* 第二行有 3 列： sidebar-left, main, sidebar-right */
+        'sidebar-left main sidebar-right'
+        /* 第三行只有一列: footer (它占3列宽度) */
+        'footer footer footer';
+    gap: 10px;
+    background-color: #2196f3;
+    padding: 10px;
+}
+
+.header {
+    grid-area: header;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar-left {
+    grid-area: sidebar-left;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    text-align: center;
+}
+
+.main {
+    grid-area: main;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar-right {
+    grid-area: sidebar-right;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    text-align: center;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    text-align: center;
+}
+```
+
+**注意**: `grid-area` 是可以独立使用的，它除了可以使用 `grid-template-areas` 属性定义的命名区域来定位网格项外，还可以使用行和列位置来定位
