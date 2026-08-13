@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Technical Documentation Page</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+    <nav id="navbar">
+      <header>
+        <p class="header">Web Design Technology</p>
+      </header>
+      <ul>
+        <li><a class="nav-link" href="#html">HTML</a></li>
+        <li><a class="nav-link" href="#css">CSS</a></li>
+        <li><a class="nav-link" href="#javascript">JavaScript</a></li>
+        <li><a class="nav-link" href="#react">React</a></li>
+        <li><a class="nav-link" href="#nodejs">NodeJS</a></li>
+      </ul>
+    </nav>
+    <main id="main-doc">
+      <section class="main-section" id="html">
+        <header>
+        <h2>HTML</h2>
+        </header>
+        <p>HTML stands for HyperText Markup Language and is the standard code used to structure and display content on a web page.</p>
+        <div class="content">
+          <p>It is not a programming language; rather, it is a markup language that uses a system of tags to define the individual structural blocks of a website, such as text paragraphs, links, headings, and images.</p>
+          <p>You can read more comprehensive guides on platforms like the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">MDN Web Docs HTML Guide</a> or the <a href="https://www.w3schools.com/html/html_intro.asp">W3Schools HTML Introduction</a> to see how it operates.</p>
+        </div>
+      </section>
+
+      <section class="main-section" id="css">
+        <header>
+        <h2>CSS</h2>
+        </header>
+        <p>CSS stands for Cascading Style Sheets. It is a style sheet language used to control the visual presentation, formatting, and layout of a web document.</p>
+        <div class="content">
+          <p>Developers use CSS to transform plain text into a modern user experience. It handles:</p>
+          <ul>
+            <li>Aesthetics: Defining text colors, custom typography, and page backgrounds.</li>
+            <li>Layouts: Structuring web content via multi-column grid layouts, padding, and alignment.</li>
+            <li>Responsiveness: Scaling websites smoothly so they display correctly on desktops, tablets, and smartphones.</li>
+            <li>Interactivity: Adding hover states, animations, transitions, and dynamic effects.</li>
+          <ul>
+        </div>
+      </section>
+
+      <section class="main-section" id="javascript">
+        <header>
+        <h2>JavaScript</h2>
+        </header>
+        <p> is a lightweight, cross-platform programming language primarily used to make web pages interactive. It is one of the core technologies of the World Wide Web (alongside HTML and CSS), enabling dynamic content updates, web page animations, interactive maps, and complex multimedia controls.</p>
+        <div class="content">
+          <p>To understand JavaScript, it helps to see how it works alongside the other two foundational languages of the web:</p>
+          <ul>
+            <li>HTML (HyperText Markup Language): Defines the structure and raw content of the page, like paragraphs, headings, and images.</li>
+            <li>CSS (Cascading Style Sheets): Handles the styling and design, including fonts, colors, and layout configurations.</li>
+            <li>JavaScript: Adds the behavior and logic, transforming static content into an interactive user experience.</li>
+          </ul>
+
+          <p>In JavaScript, you can use function like <code>getElementById()</code> to get a HTML element by its id.</p>
+<pre>
+<code>const js = document.getElemen('javascript');
+js.style.backgroundColor = "0xffff11";</code>
+</pre>
+        </div>
+      </section>
+
+      <section class="main-section" id="react">
+        <header>
+        <h2>React</h2>
+        </header>
+        <p>React is a free, open-source JavaScript library used for building interactive user interfaces (UIs), primarily for single-page web applications. Created by Meta (formerly Facebook) in 2013, it allows developers to build fast, scalable, and dynamic web applications by managing how data is displayed and updated on the screen.</p>
+        <div class="content">
+          <p>React Component:</p>
+<pre>
+  <code>function MyButton() {
+      return (
+        &lt;button&gt;I am a button&lt;/bugt;
+      );
+    }</code>
+</pre>
+          <p>Nested Component:</p>
+<pre>
+<code>export default function MyApp() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;欢迎来到我的应用&lt;/h1&gt;
+      &lt;MyButton /&gt;
+    &lt;/div&gt;
+  );
+}</code>
+</pre>
+        </div>
+      </section>
+
+      <section class="main-section" id="nodejs">
+        <header>
+        <h2>NodeJS</h2>
+        </header>
+        <p>Node.js is a free, open-source, cross-platform JavaScript runtime environment that allows developers to execute JavaScript code outside of a web browser.</p>
+        <div class="content">
+          <p>In web development, a URL fragment is the part starting with a # symbol. Browsers do not send this fragment to Node.js HTTP servers by default. However, if you are parsing full URL strings inside Node.js, you can easily extract the fragment using the built-in URL module</p>
+<pre>
+<code>// Using Node.js built-in URL API
+const { URL } = require('url');
+const myUrl = new URL('https://example.com');
+// Access the fragment (hash)
+console.log(myUrl.hash); 
+// Output: #settings-tab</code>
+</pre>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
