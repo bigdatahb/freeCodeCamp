@@ -3652,3 +3652,195 @@ CSS Grid 和 Flexbox 等工具使响应式设计的实现更加轻松高效。
 - 超大尺寸设备：1201px 及以上
 
 这些并非严格的规定，而是常见的做法。
+
+## 变量
+
+### CSS 自定义属性
+
+CSS 自定义属性，也称为 CSS 变量。
+
+定义变量语法：
+
+```css
+:root {
+    /** 在 -- 后面跟上属性名 */
+    /* 声明一个名为 --main-color 的自定义属性， 属性值为 #3498db */
+    --main-color: #3498db;
+}
+```
+
+`:root` 伪类通常用来声明全局自定义属性，它代表了 DOM 树中的最高级别父级
+
+使用变量:
+
+```css
+.button {
+    /* 通过 var() 来使用变量 */
+    background-color: var(--main-color);
+}
+```
+
+**变量也遵循 CSS 层叠规则**，因此我们可以在特定的上下文中重新给变量赋值：
+
+```css
+.alert {
+    /* 这里定义的 --main-color 值只在 .alert 中或其子元素中有效*/
+    --main-color: #e74c3c;
+    background-color: var(--main-color);
+}
+```
+
+自定义属性也支持备用值。如果自定义属性未定义或无效，您可以提供备用值：
+
+```css
+:root {
+    --text-color: green;
+}
+
+.text {
+    /* 优先取自定义属性 --text-color 的值，若自定义属性无效，则取备用值 green */
+    color: var(--text-color, green);
+}
+```
+
+自定义属性与媒体查询结合使用：
+
+```css
+:root {
+    --card-width: 90%;
+    --card-bg: #f0f0f0;
+    --card-padding: 1rem;
+    --text-color: #333;
+}
+
+/* Tablet screens and up */
+@media (min-width: 600px) {
+    :root {
+        --card-width: 70%;
+        --card-bg: #e8f5e9;
+        --card-padding: 1.5rem;
+    }
+}
+
+/* Desktop screens and up */
+@media (min-width: 1024px) {
+    :root {
+        --card-width: 50%;
+        --card-bg: #d0f0ff;
+        --card-padding: 2rem;
+    }
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fafafa;
+}
+
+.card {
+    width: var(--card-width);
+    background-color: var(--card-bg);
+    padding: var(--card-padding);
+    color: var(--text-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+```
+
+### @property 规则
+
+`@property` 规则是一项强大的 CSS 功能，它允许开发人员定义自定义属性，并更好地控制其行为，包括动画效果和初始值。
+
+`@property` 规则的基本语法如下：
+
+```css
+@property --property-name {
+    syntax: '<type>';
+    inherits: true | false;
+    initial-value: <value>;
+}
+```
+
+- `--property-name` 是变量名称，与所有自定义属性一样，它必须以两个短横线开头。
+
+- `syntax` 定义了属性的类型，可以是诸如 `<color>` 、 `<length>` 、 `<number>` 、 `<percentage>` 之类的类型，或者更复杂的类型
+
+- `inherits` 指定属性是否应从其父元素继承值。
+
+- `initial-value` 设置属性的默认值。
+
+```html
+<button class="button">Click Me</button>
+```
+
+```css
+@property --main-color {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: #3498db;
+}
+
+.button {
+    background-color: var(--main-color);
+}
+```
+
+使用 `@property` 对自定义属性进行动画处理：
+
+```css
+@property --gradient-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.gradient-box {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(var(--gradient-angle), red, blue);
+    transition: --gradient-angle 0.5s;
+}
+
+.gradient-box:hover {
+    --gradient-angle: 90deg;
+}
+```
+
+---
+
+**回退机制**
+
+在 CSS 中，回退机制至关重要，它能确保样式在不支持某些功能的浏览器中优雅降级。使用 `@property` 时，回退机制在两个层面上发挥作用：规则本身和自定义属性的使用。
+
+- 对于不支持 `@property` 规则的浏览器，您可以通过以传统方式声明自定义属性来提供备用方案：
+
+    ```css
+    :root {
+        /* 为不支持 @property 的情形提供备用方案 */
+        --main-color: #3498db;
+    }
+
+    @property --main-color {
+        syntax: '<color>';
+        inherits: false;
+        initial-value: #3498db;
+    }
+
+    body {
+        background-color: var(--main-color);
+    }
+    ```
+
+- 使用自定义属性时，您可以像使用标准自定义属性一样，使用 `var()` 函数提供备用值：
+
+    ```css
+    .button {
+        /** 使用变量时提供备用值 */
+        background-color: var(--main-color, #3498db);
+    }
+    ```
