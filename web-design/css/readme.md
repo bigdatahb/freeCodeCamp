@@ -3436,3 +3436,219 @@ ol[type='A'] {
     font-weight: bold;
 }
 ```
+
+## 响应式设计 Responsive Design
+
+### 响应式网页设计
+
+响应式网页设计是一种网页开发方法，旨在创建能够在各种设备（从台式电脑到手机）上提供最佳浏览和交互体验的网站。
+
+响应式设计的 **核心原则** 是适应性：网站能够根据浏览设备的屏幕尺寸和功能调整其布局和内容。
+
+响应式设计通常依赖于三个 **主要组成部分**：
+
+- 流式网格（Fluid Grid）使用百分比等相对单位，而不是像素等固定单位，从而允许内容根据屏幕尺寸调整大小和重新排列。
+
+- 弹性图像会根据其包含元素的大小自动调整大小，确保在较小的屏幕上不会超出容器范围。
+
+- 媒体查询允许开发者根据设备特性（主要是视口宽度）应用不同的样式。
+
+CSS Grid 和 Flexbox 等工具使响应式设计的实现更加轻松高效。
+
+- Flexbox 是一种一维布局模型
+
+- CSS Grid 是一种二维布局模型，可以实现更复杂的布局
+
+前面已经介绍过 Flexbox，下面看一个 Grid 的示例:
+
+```html
+<div class="grid-container">
+    <div class="grid-item">Item 1</div>
+    <div class="grid-item">Item 2</div>
+    <div class="grid-item">Item 3</div>
+</div>
+```
+
+```css
+.grid-container {
+    /** 使用 Grid 布局模型 */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    background-color: antiquewhite;
+}
+
+/* 中等屏幕上 2 列 */
+@media (min-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* 大屏上 3 列 */
+@media (min-width: 1024px) {
+    .grid-container {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+```
+
+**响应式图片** 是响应式网页设计的另一个关键方面。HTML5 中的 `srcset` 属性和 `<picture>` 元素可以根据设备性能提供不同的图片文件，确保用户在屏幕较小或分辨率较低的设备上不会下载过大的图片文件。
+
+### 媒体查询 Media Query
+
+媒体查询是响应式网页设计的基础组成部分，它允许开发者根据用户设备或浏览器的特性应用不同的样式。媒体查询提供了一种无需更改内容本身即可针对各种设备定制内容呈现方式的方法。
+
+媒体查询的 **核心** 在于包含媒体类型以及一个或多个用于检查特定条件的表达式。如果这些条件为真，则应用相应的样式。
+
+基本语法：
+
+```css
+@media mediatype and (feature: value) {
+    /* CSS rules go here */
+}
+```
+
+`mediatype` 指定查询适用的媒体类型，而 `feature: value` 对定义了应用样式必须满足的条件。
+
+最常用的媒体类型：
+
+- `all`，适用于所有设备。如果未指定媒体类型，则默认使用此格式。
+
+- `print`，适用于在屏幕上以打印预览模式查看的分页材料和文档。
+
+- `screen`，适用于屏幕
+
+最常用的媒体特征：
+
+- `width` 和 `height`，通常与 `min-`, `max-` 前缀一起使用，用于范围查询
+
+    ```css
+    @media screen and (min-width: 768px) {
+        /* Styles for screens at least 768px wide */
+    }
+    ```
+
+- `aspect-ratio` 描述的是视口宽度与高度之比
+
+    ```css
+    @media screen and (aspect-ratio: 16/9) {
+        /* Styles for screens with a 16:9 aspect ratio */
+    }
+    ```
+
+- `orientation` 用于显示设备当前处于横向还是纵向模式
+
+    检查视口宽度是否大于高度
+
+    ```css
+    @media screen and (orientation: landscape) {
+        /* Styles for landscape orientation */
+    }
+    ```
+
+- `resolution` 特性描述了输出设备的分辨率，单位为每英寸点数 (dpi) 或每厘米点数 (dpcm)
+
+    ```css
+    @media screen and (min-resolution: 300dpi) {
+        /* Styles for high-resolution screens */
+    }
+    ```
+
+- `hover` 功能用于测试主输入机制（primary input mechanism）是否能够悬停在元素上方
+
+    ```css
+    @media (hover: hover) {
+        /* Styles for devices that support hover */
+    }
+    ```
+
+- `prefers-color-scheme` 检测用户请求的是浅色主题还是深色主题
+
+    ```css
+    @media (prefers-color-scheme: dark) {
+        /* Styles for dark mode */
+    }
+    ```
+
+- 媒体查询还可以使用逻辑运算符组合多个条件， `and` 用于组合多个条件， `not` 和 `only` 用于否定或排除特定条件
+
+    ```css
+    @media screen and (min-width: 768px) and (orientation: landscape) {
+        /* Styles for landscape screens at least 768px wide */
+    }
+    ```
+
+- 也可以用逗号分隔的列表来指定多个查询，其作用类似于“或”运算符
+
+    ```css
+    @media screen and (min-width: 768px), print {
+        /* Styles for screens at least 768px wide OR for print */
+    }
+    ```
+
+在实践中，媒体查询通常用于创建响应式布局。一种常见的模式是为移动设备定义一个基础样式，然后使用媒体查询来增强布局以适应更大的屏幕：
+
+```css
+/* Base styles for mobile */
+.container {
+    width: 100%;
+    padding: 15px;
+}
+
+/* Styles for tablets */
+@media screen and (min-width: 768px) {
+    .container {
+        width: 750px;
+        margin: 0 auto;
+    }
+}
+
+/* Styles for desktops */
+@media screen and (min-width: 1024px) {
+    .container {
+        width: 960px;
+    }
+}
+```
+
+### 媒体断点 Media Breakpoint
+
+媒体断点是指网站设计中的特定点，在这些点上，布局和内容会进行调整以适应不同的屏幕尺寸。这些断点在响应式网页设计中至关重要，它使开发人员能够创建在各种设备上（从手机到大型台式显示器）都能良好显示和运行的网站。
+
+在 CSS 中，媒体断点是通过媒体查询实现的。例如，你可以将断点设置为 768 像素，以区分移动设备和平板电脑的布局。
+
+```css
+/* Styles for screens wider than 768px */
+@media screen and (min-width: 768px) {
+    body {
+        font-size: 1.125rem;
+    }
+}
+```
+
+上面的示例，媒体断点就是 `width:768px`
+
+选择断点时，并没有万能的解决方案。适合您网站的断点取决于您的具体设计和内容。不过，现代网页设计中，许多设计师会使用一些常见的断点作为起点。
+
+一组常用的断点对应于常见的设备类别：
+
+- 小型设备（智能手机）：最高可达 640px
+
+- 中等尺寸设备（平板电脑）：641px 至 1024px
+
+- 大型设备（台式机）：1025px 及以上
+
+更细粒度的断点划分：
+
+- 超小型设备：最大 576px
+
+- 小型设备：577px 至 768px
+
+- 中等尺寸设备：769px 至 992px
+
+- 大尺寸设备：993px 至 1200px
+
+- 超大尺寸设备：1201px 及以上
+
+这些并非严格的规定，而是常见的做法。
