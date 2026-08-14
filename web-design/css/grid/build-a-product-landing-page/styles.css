@@ -1,0 +1,151 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 100px;
+}
+
+:root {
+  --primary-color: #FF8C00;
+  --secondary-color: #F1C40F;
+}
+
+#header-img {
+  max-width: 300px;
+}
+
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  position: fixed;
+  background-color: white;
+  top: 0;
+}
+
+#nav-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  padding: 5px 10px;
+  color: #111;
+}
+
+main {
+  width: 80%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+  padding-top: 100px;
+}
+
+.feature-container {
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; */
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+  place-items: center;
+}
+
+i {
+  color: var(--primary-color, #FF8C00);
+  font-size: 2rem;
+  margin-right: 2rem;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  margin-bottom: 20px;
+}
+
+#price-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.price-container {
+  border: 1px solid black;
+  padding: 10px 20px;
+  min-width: 200px;
+  border-radius: 20px;
+  margin: 20px auto;
+}
+
+.price-container ul {
+  /* list-style: none; */
+  min-height: 160px;
+}
+.price-container h3 {
+  text-align: center;
+}
+.price-container p {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 10px auto;
+}
+
+.price-container button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 30px;
+  font-size: 1.2rem;
+  border: none;
+  background-color: var(--primary-color, #FF8C00);
+  border-radius: 10px;
+  color: black;
+}
+
+.price-container button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  background-color: var(--secondary-color, #F1C40F);
+  color: #111;
+}
+
+.price-container ul li {
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  letter-spacing: 0.6px;
+  margin-left: 10px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+}
+
+#submit {
+  display: block;
+  font-size: 1.2rem;
+  padding: 5px 30px;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  margin: 10px auto;
+}
+
+#email {
+  width: 300px;
+  font-size: 1.2rem;
+  padding: 5px;
+}
+
+label {
+  font-size: 1.2rem;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product Landing Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  </head>
+
+<body>
+  <header id="header">
+    <img id="header-img" src="https://cdn.freecodecamp.org/testable-projects-fcc/images/product-landing-page-logo.png" alt="logo of original trombones">
+    <nav id="nav-bar">
+      <a href="#feature-section" class="nav-link">Features</a>
+      <a href="#video" class="nav-link">How it works</a>
+      <a href="#price-section" class="nav-link">Pricing</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Handcrafted, home-made masterpieces</h1>
+    <form id="form" action="https://www.freecodecamp.org/email-submit" method="POST">
+      
+      <label for="email">Email: </label>
+      <input type="email" name="email" id="email" placeholder="Enter your email address">
+      <input type="submit" id="submit" value="Submit">
+    </form>
+    <section id="feature-section">
+      <div class="feature-container">
+        <i class="fas fa-fire"></i>
+        <div class="feature">
+        <h2>Premium Materials</h2>
+        <p>Our trombones use the shiniest brass which is sourced locally. This will increase the longevity of your purchase.</p>
+        </div>
+      </div>
+      <div class="feature-container">
+        <i class="fas fa-truck-moving"></i>
+        <div class="feature">
+          <h2>Fast Shipping</h2>
+          <p>We make sure you receive your trombone as soon as we have finished making it. We also provide free returns if you are not satisfied.</p>
+        </div>
+      </div>
+      <div class="feature-container">
+        <i class="fas fa-battery-full"></i>
+        <div class="feature">
+        <h2>Quality Assurance</h2>
+        <p>For every purchase you make, we will ensure there are no damages or faults and we will check and test the pitch of your instrument.</p>
+        </div>
+      </div>
+    </section>
+    <video id="video" controls width="400">
+      <source src="https://upos-sz-estghw.bilivideo.com/upgcxcode/29/20/40278822029/40278822029-1-192.mp4?e=ig8euxZM2rNcNbN17bdVhwdlhbRjhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&oi=2018263300&deadline=1786733325&platform=html5&trid=5022bc1546c44502b17a56963a457f1h&mid=0&nbs=1&gen=playurlv3&os=estghw&og=hw&uipk=5&upsig=092bfeb709180fcca4be87e822c32814&uparams=e,oi,deadline,platform,trid,mid,nbs,gen,os,og,uipk&bvc=vod&nettype=0&bw=1737603&lrs=0&dl=0&f=h_0_0&agrr=0&buvid=&build=0&orderid=0,1" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <section id="price-section">
+      <div class="price-container">
+        <h3>Tenor Trombone</h3>
+        <p>$600</p>
+        <ul>
+          <li>Good for beginners</li>
+          <li>Excellent sound quality</li>
+          <li>Great for Jazz Bands</li>
+          <li>Nice and shiny</li>
+        </ul>
+        <button>SELECT</button>
+      </div>
+      <div class="price-container">
+        <h3>Bass Trombone</h3>
+        <p>$900</p>
+        <ul>
+          <li>Sound quality is unmatched</li>
+          <li>Best for professionals</li>
+          <li>Absolutely stunning</li>
+          <li>Durable and long lasting</li>
+        </ul>
+        <button>SELECT</button>
+      </div>
+      <div class="price-container">
+        <h3>Valve Trombone</h3>
+        <p>$1200</p>
+        <ul>
+          <li>Plays similar to a Trumpet</li>
+          <li>Great for Jazz Bands</li>
+          <li>Beautiful in sound and appearance</li>
+          <li>Just amazing</li>
+        </ul>
+        <button>SELECT</button>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
