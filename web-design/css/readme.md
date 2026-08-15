@@ -4224,3 +4224,168 @@ grid-template-areas:
 ```
 
 **注意**: `grid-area` 是可以独立使用的，它除了可以使用 `grid-template-areas` 属性定义的命名区域来定位网格项外，还可以使用行和列位置来定位
+
+## 动画
+
+### 动画工作原理
+
+CSS 动画无需 JavaScript 或复杂的编程，即可在网页上创建动态且引人入胜的视觉效果。它们提供了一种在指定时间内平滑过渡不同样式元素的方法。
+
+CSS 动画的 **核心** 由两个主要部分组成： **`@keyframes` 规则** 和 **`animation` 属性**。
+
+`@keyframes` 规则定义了动画的各个阶段和样式。它指定了元素在动画过程中不同时刻应具有的样式。
+
+```css
+@keyframes slide-in {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+```
+
+这条名为 `slide-in` 的 `@keyframes` 规则定义了一个元素从左向右移动的动画。百分比表示动画的进度， `0%` 表示开始， `100%` 表示结束。
+
+`translateX` 函数控制元素在动画进入视图时的水平位置
+
+要将此动画应用于元素，可以使用 `animation` 属性:
+
+```html
+<div class="sliding-element">Hello, I slide in!</div>
+```
+
+```css
+@keyframes slide-in {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.sliding-element {
+    animation: slide-in 2s ease-out infinite;
+}
+```
+
+这会将 `slide-in` 动画应用于元素，持续时间为 2 秒，并应用 `ease-out` 计时函数， `infinite` 表示无限循环
+
+`animation` 属性实际上是下面几个属性的简写形式:
+
+- `animation-name` 指定要使用的 `@keyframes` 规则
+
+- `animation-duration` 用于设置动画完成所需的时间
+
+- `animation-timing-function` 定义了动画如何随时间进行，例如 `ease` 、 `linear` 、 `ease-in-out`
+
+- `animation-delay` 指定动画开始前的延迟时间
+
+- `animation-iteration-count` 设置动画应重复的次数
+
+- `animation-direction` 决定动画是向前播放、向后播放还是交替播放，`normal`， `reverse`， `alternate`
+
+- `animation-fill-mode` 指定元素在动画前后应如何设置样式
+
+- `animation-play-state` 允许您暂停和恢复动画
+
+```html
+<div class="complex-animation">Watch my colors change!</div>
+```
+
+```css
+.complex-animation {
+    animation-name: color-change;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-delay: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes color-change {
+    0% {
+        background-color: red;
+    }
+    50% {
+        background-color: blue;
+    }
+    100% {
+        background-color: green;
+    }
+}
+```
+
+这个动画使元素的背景颜色在红色、蓝色和绿色之间不断过渡
+
+CSS 动画可以通过各种事件触发，例如鼠标悬停在元素上：
+
+```html
+<button class="button">Hover over me!</button>
+```
+
+```css
+.button {
+    background-color: blue;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: red;
+}
+```
+
+### 使用动画会存在哪些无障碍问题？
+
+动画可以极大地提升网站的视觉吸引力和用户体验。然而，对于某些用户而言，动画也可能带来严重的访问障碍。因此，了解这些问题并采取相应的解决方案至关重要，以确保您的网站对所有用户都可用。
+
+- 动画带来的一个主要无障碍问题是，它们可能会给部分用户造成不适甚至身体伤害。患有前庭功能障碍或运动敏感的人在观看屏幕上的某些类型的动画时，可能会出现头晕、恶心或头痛等症状。
+
+- 此外，动画可能会分散认知障碍或注意力缺陷用户的注意力。快速闪烁或频闪效果尤其成问题，它们可能会诱发光敏性癫痫患者的癫痫发作。一般来说，应避免任何每秒闪烁超过三次的内容。
+
+- 动画可能会让一些用户难以集中注意力或阅读内容。对于视力障碍或阅读困难的用户来说尤其如此，他们可能难以追踪移动的文本或不断变化的布局。
+
+为了解决这些问题，CSS 提供了 `prefers-reduced-motion` 媒体查询。此功能允许 Web 开发人员在系统层面检测用户是否请求了最小动画或动态效果。
+
+```css
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+```
+
+这段 CSS 代码片段可以有效地禁用大多数动画和过渡效果，尤其适用于那些选择减少动态效果的用户
+
+`@media` 查询规则会检查用户是否偏好减少动态效果。如果是，则应用媒体查询样式。
+
+在媒体查询中，我们针对所有元素（ \* ）并覆盖动画和过渡属性
+
+我们将 `animation-duration` 和 `transition-duration` 设置为一个极小的值（ `0.01ms` ）。这实际上关闭了动画，但仍然允许它们完成播放，这对于某些功能来说至关重要。
+
+`animation-iteration-count: 1` 确保任何循环动画只播放一次。
+
+`scroll-behavior: auto` 禁用平滑滚动效果。
+
+使用 `!important` 声明是为了确保这些规则优先于其他动画样式。
+
+需要注意的是，虽然这种方法能有效减少动画动作，但它是一种一刀切的方法。为了更精确地控制动画动作，您可能需要为动画定义特定的减少动作的替代方案。
+
+以下是一个更有针对性的方法示例：
+
+```css
+.animated-element {
+    transition: transform 0.3s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animated-element {
+        transition: none;
+    }
+}
+```
