@@ -6,6 +6,8 @@
 
 ### Variables and Strings
 
+#### 基本数据类型和变量
+
 JavaScript 有 8 种数据类型，7 种基本数据类型（存储在栈中，不可变）和一种复杂数据类型 `object`
 
 - number 包括整数和小数，特殊值有 `NaN` 和 `Infinity`
@@ -58,3 +60,63 @@ JavaScript 中，变量名只能包含字母、数字、下划线和美元符号
 - 不能使用 JavaScript 关键字命名变量
 
 - 变量名应该具有描述性意义
+
+#### 字符串
+
+JavaScript 可以使用 `''` 或 `""` 来表示字符串，在字符串中使用特殊字符需要转义，这是常识。
+
+- **字符串拼接**
+
+    字符串可以使用 `+` 进行拼接，也可以使用 `string.concat()` 函数来拼接字符串，例如将 `s1, s2, s3` 进行拼接：
+
+    ```js
+    let s1 = 'abc';
+    const s2 = 'ABC';
+    const s3 = 'xyz';
+
+    // concat 函数拼接字符串的结果会生成一个新的字符串对象，而不是将 s2, s3 拼接到 s1 中，记住字符串是不可变类型
+    // 使用新字符串对 s1 重新赋值
+    s1 = s1.concat(s2, s3);
+
+    console.log(s1, s2, s3);
+    ```
+
+- **字符串插值语法**
+
+    JavaScript 支持 **字符串插值语法**，通过 **字符串模板** 来实现，使用 `` 来表示字符串模板：
+
+    ```js
+    const name = 'Alex';
+    let age = 18;
+
+    // 使用 `` 来创建字符串模板，在字符串模板中可以使用 ${} 语法来进行插值，大括号中可以是 JavaScript 变量或者表达式
+    const greeting = `Hello, my name is ${name}, ${age} years old now.`;
+
+    console.log(greeting);
+    ```
+
+- **获取字符串中的字符**
+
+    可以使用 `[]` 语法来获取字符串中的字符，下标从 0 开始
+
+    ```js
+    const s = 'Alex love Cindy';
+
+    console.log(s[0]); // 获取第一个字符
+    console.log(s[s.length - 1]); // 获取最后一个字符
+    ```
+
+- **获取指定字符在字符串中的位置**
+
+    ```js
+    const s = 'Alex love Cindy !';
+
+    console.log(s.indexOf('e')); // 获取 e 在字符串 s 中第一次出现的位置： 2
+
+    // 可以指定第二个参数，从指定位置开始查找
+    console.log(s.indexOf('e', 3)); // 8
+
+    console.log(s.indexOf('ve')); // 也可以查找子串的位置：7
+
+    console.log(s.indexOf('Love')); // 若找不到，返回 -1
+    ```
