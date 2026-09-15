@@ -281,3 +281,355 @@ JavaScript 字符串内部使用 UTF-16 编码（Unicode编码），ASCII 值对
     let c = String.fromCharCode(0x1d546);
     console.log(c);
     ```
+
+### Numbers and Booleans
+
+#### Number
+
+JavaScript 中所有数值都是 `number` 类型，包括两个特殊值： `NaN` 和 `Infinity`
+
+可以使用 `typeof` 运算符查看对象的数据类型
+
+JavaScript 支持的数值字面量除了 10 进制，还支持二进制、八进制、十六进制：
+
+```js
+const a1 = 10;
+const a2 = 0xa; // 16进制, 使用前缀 0x
+const b = 0017; // 八进制, 使用前缀 0o 或者 00 , 15
+const x = 0b01011111; // 二进制字面量, 使用前缀 0b , 95
+console.log(`a1=${a1}, a2=${a2}, b = ${b}, x = ${x}`);
+```
+
+#### 算术运算符
+
+`+`， `-`， `*`， `/`， `%`， `**`
+
+需要注意的是尝试除以 0 会返回 `Infinity`
+
+#### 字符串与数值进行运算
+
+当字符串与数值进行加、减、乘、除运算的时候，JavaScript 会尝试对某一个操作数进行强制类型转换，如果转换之后运算不成功则返回 NaN
+
+```js
+const result = 5 + '10';
+
+console.log(result); // 510
+console.log(typeof result); // string
+
+const subtractionResult = '10' - 5;
+console.log(subtractionResult); // 5
+console.log(typeof subtractionResult); // number
+
+const multiplicationResult = '10' * 2;
+console.log(multiplicationResult); // 20
+console.log(typeof multiplicationResult); // number
+
+const divisionResult = '20' / 2;
+console.log(divisionResult); // 10
+console.log(typeof divisionResult); // number
+
+const subtractionResult = 'abc' - 5;
+console.log(subtractionResult); // NaN
+console.log(typeof subtractionResult); // number
+
+const multiplicationResult = 'abc' * 2;
+console.log(multiplicationResult); // NaN
+console.log(typeof multiplicationResult); // number
+
+const divisionResult = 'abc' / 2;
+console.log(divisionResult); // NaN
+console.log(typeof divisionResult); // number
+```
+
+#### 布尔值的算术运算
+
+JavaScript 在数学运算中将布尔值视为数字： `true` 变为 1 ， `false` 变为 0 。
+
+```js
+const result1 = true + 1;
+console.log(result1); // 2
+console.log(typeof result1); // number
+
+const result2 = false + 1;
+console.log(result2); // 1
+console.log(typeof result2); // number
+
+const result3 = 'Hello' + true; // 将布尔值转为字符串
+console.log(result3); // "Hellotrue"
+console.log(typeof result3); // string
+```
+
+#### null 和 undefined 的算术运算
+
+在算术运算中，JavaScript 将 `null` 作为 0， 将 `undefined` 作为 NaN
+
+```js
+const result1 = null + 5;
+console.log(result1); // 5
+console.log(typeof result1); // number
+
+const result2 = undefined + 5;
+console.log(result2); // NaN
+console.log(typeof result2); // number
+```
+
+JavaScript 经常执行类型强制转换，自动转换诸如数字、字符串和布尔值等数据类型，有时转换方式可能出乎意料。理解这些转换对于避免项目中的错误和编写健壮的代码至关重要。
+
+#### Boolean
+
+可以使用 `Boolean()` 来检查值的真假
+
+常见的 `false` 值：
+
+- 空字符串
+
+- 0
+
+- null
+
+- undefined
+
+- NaN
+
+#### 一元运算符
+
+- `+` 和 `-` 既可以是二元运算符（加、减），也可以是一元运算符（正、负）：
+
+    ```js
+    const str = '42';
+    const strToNum = +str;
+
+    console.log(strToNum); // 42
+    console.log(typeof str); // string
+    console.log(typeof strToNum); // number
+
+    const s = '42';
+    const strToNegativeNum = -s;
+
+    console.log(strToNegativeNum); // -42
+    console.log(typeof s); // string
+    console.log(typeof strToNegativeNum); // number
+    ```
+
+- 逻辑非运算符 `!`
+
+    true 变 false, false 变 true
+
+- 按位取反运算符 `~`
+
+- `void` 运算符
+
+    它会计算一个表达式并返回 `undefined`
+
+    ```js
+    const result = void (2 + 2);
+
+    console.log(result); // undefined
+    ```
+
+    `void` 也常用于超链接中，禁止导航:
+
+    ```html
+    <a href="javascript:void(0);">Click Me</a>
+    ```
+
+- `typeof` 运算符
+
+    返回操作数的类型，以字符串形式表示。
+
+    ```js
+    const value = 'Hello world';
+
+    console.log(typeof value); // string
+    ```
+
+#### 位运算
+
+常见的位运算类型：
+
+- 按位与 `&`
+
+- 按位或 `|`
+
+- 按位非 `~`
+
+- 异或 `^`
+
+- 右移 `>>`
+
+- 左移 `<<`
+
+#### 三元运算符
+
+`? :`
+
+#### 二元逻辑运算符
+
+- `&&`
+
+    逻辑与，检查两个操作数是否都为真，并返回结果。如果两个操作数都为真，则返回第二个值，即右侧的值:
+
+    ```js
+    const result = true && 'hello';
+
+    console.log(result); // hello
+    ```
+
+    如果其中一个操作数为假，则返回该假值：
+
+    ```js
+    const result = 0 && 3;
+
+    console.log(result); // 0
+    ```
+
+    如果两个操作数都为假值，则返回第一个假值：
+
+    ```js
+    const result = false && 0;
+
+    console.log(result); // false
+    ```
+
+- `||`
+
+    逻辑或，检查两个操作数中是否至少有一个为真。如果第一个操作数为真，则返回该值：
+
+    ```js
+    const result = 'This is truthy' || false;
+
+    console.log(result); // This is truthy
+    ```
+
+    如果第一个操作数为假，而第二个操作数为真，则返回第二个值：
+
+    ```js
+    const result = 0 || 'This is truthy';
+
+    console.log(result); // This is truthy
+    ```
+
+- `??`
+
+    空值合并运算符，仅当第一个值是 `null` 或 `undefined` 时才返回第二个值
+
+    ```js
+    const result = null ?? 'default';
+
+    console.log(result); // default
+
+    const userSettings = {
+        theme: null,
+        volume: 0,
+        notifications: false,
+    };
+
+    let theme = userSettings.theme ?? 'light';
+    console.log(theme); // light
+    ```
+
+#### Math 对象及常用方法
+
+JavaScript 内置了一个 `Math` 对象来提供一些简单的数学运算
+
+主要方法有：
+
+- `Math.random()`， 生成一个介于 0（包含）到 1（不包含）之间的随机小数
+
+- `Math.min()` 和 `Math.max()`，返回一组数中的最小值和最大值
+
+- `Math.round()`，四舍五入返回最近的一个整数
+
+- `Math.floor()` 和 `Math.ceil()`
+    - `Math.floor()` 向下取整
+
+    - `Math.ceil()` 向上取整
+
+    生成两个整数之间的随机数：
+
+    ```js
+    // 随机生成 [5, 10] 之间的整数
+    const max = 10;
+    const min = 5;
+    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    console.log(randomNum);
+    ```
+
+- `Math.trunc()`，移除数值的小数部分，只返回整数部分
+
+    ```js
+    console.log(Math.trunc(2.9)); // 2
+    console.log(Math.trunc(9.1)); // 9
+    ```
+
+- `Math.sqrt()` 和 `Math.cbrt()`，求平方根和立方根
+
+    ```js
+    console.log(Math.sqrt(81)); // 9
+    console.log(Math.cbrt(27)); // 3
+    ```
+
+- `Math.abs()`，求绝对值
+
+- `Math.pow(a, b)` 求 a 的 b 次方
+
+#### isNaN()
+
+在 JavaScript 中， `NaN` 是一个特殊值，表示无法表示的或者未定义的一个数值结果
+
+我们要判断一个值是不是 `NaN` 不能使用比较运算符 `==` 或 `===`，`NaN` 不等于任何值，包括它自身：
+
+```js
+console.log(NaN === NaN); // false
+```
+
+我们要判断一个值是否是 `NaN` 可以使用 JavaScript 的 `isNaN()` 函数：
+
+```js
+console.log(isNaN(NaN)); // true
+console.log(isNaN(undefined)); // true
+console.log(isNaN({})); // true
+
+console.log(isNaN(true)); // false
+console.log(isNaN(null)); // false
+console.log(isNaN(37)); // false
+
+console.log(isNaN('37')); // false: "37" is converted to 37
+console.log(isNaN('37.37')); // false: "37.37" is converted to 37.37
+console.log(isNaN('')); // false: empty string is converted to 0
+console.log(isNaN(' ')); // false: string with a space is converted to 0
+
+console.log(isNaN('blabla')); // true: "blabla" is not a number
+```
+
+`isNaN()` 函数首先尝试将参数转换为数字。如果无法转换，则返回 `true`，这种行为可能会导致一些意想不到的结果，尤其是在处理可以强制转换为数字的字符串时。
+
+由于这些潜在的不一致性，ES6（JavaScript 第六版，于 2015 年发布）引入了 `Number.isNaN()` 方法
+
+#### Number.isNaN()
+
+该方法不会在测试前尝试将参数转换为数字。它仅当值恰好为 `NaN` 时才返回 `true`
+
+```js
+console.log(Number.isNaN(NaN)); // true
+console.log(Number.isNaN(Number.NaN)); // true
+console.log(Number.isNaN(0 / 0)); // true
+
+console.log(Number.isNaN('NaN')); // false
+console.log(Number.isNaN(undefined)); // false
+console.log(Number.isNaN({})); // false
+console.log(Number.isNaN('blabla')); // false
+```
+
+#### toFixed()
+
+`toFixed()` 方法是 JavaScript 内置函数，用于将数字格式化为固定小数位数的 **字符串**，注意返回的是字符串
+
+```js
+let num = 3.14159;
+console.log(num.toFixed(2)); // "3.14"
+```
+
+**最后一位会进行四舍五入**
+
+如果不提供参数， `toFixed()` 会返回一个四舍五入的整数的字符串形式
