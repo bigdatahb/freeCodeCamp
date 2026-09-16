@@ -239,6 +239,14 @@ count 是要重复的次数，需要注意的是：
 
 - 如果将 count 设置为 `0`，返回一个空字符串
 
+#### 以指定字符串开头或结尾
+
+JavaScript 提供了两个字符串方法来判断字符串是否以指定字符串开头或结尾：
+
+- `string.startsWith(value)`
+
+- `string.endsWith(value)`
+
 #### ASCII 码和 charCodeAt() 与 fromCharCode()
 
 **ASCII（American Standard Code for Information Interchange，美国信息交换标准代码）**，使用一个字节表示一个字符，能表示 128 个字符，范围： `0 - 127`，意味着最高位固定是 0
@@ -633,3 +641,122 @@ console.log(num.toFixed(2)); // "3.14"
 **最后一位会进行四舍五入**
 
 如果不提供参数， `toFixed()` 会返回一个四舍五入的整数的字符串形式
+
+### Functions
+
+#### 定义函数的方式
+
+定义函数的三种方式:
+
+- **变量赋值法**
+
+    在 `javaScript` 中, 函数本身也是一个值, 可以赋值给变量:
+
+    ```js
+    // 方式一: 将函数赋值给变量
+    /*
+     * 定义一个变量 square, 将一个匿名函数绑定给它
+     */
+    const square = function (x) {
+        return x * x;
+    }; // 这是一个语句, 后面加 ;
+    ```
+
+- **声明表示法**
+
+    ```js
+    // 方式二: 函数声明;
+    /**
+     * 声明一个函数 add
+     */
+    function add(a, b) {
+        return a + b;
+    }
+    ```
+
+    变量绑定和函数声明法定义函数的区别:
+    1. **函数声明式定义** 不是自上而下的控制流, 它 **会将定义提升至其范围的顶部**, 因此声明式函数的定义可以在其范围内的任意位置. 可以先使用再定义
+    2. **变量绑定式定义函数, 和变量一致, 需要先定义再使用**
+    3. 变量定义需要加 `;` (虽然不加也可以, 但是会让 `javaScript engine` 去解析), 声明式函数定义后面无需加 `;`
+
+    ```js
+    // 在函数声明前使用函数，因为 future 的定义会进行提升
+    console.log('The future says:', future()); // ok, 函数声明会移动到这个范围的顶部
+
+    function future() {
+        return "You'll never have flying cars";
+    }
+
+    console.log(add(1, 2)); // ReferenceError: Cannot access 'add' before initialization
+
+    const add = function (a, b) {
+        return a + b;
+    };
+    ```
+
+- **箭头函数**
+
+    不使用 `function` 关键字, 而是使用 `=>` 来定义函数
+
+    ```js
+    const roundTo = (n, step) => {
+        let remainder = n % step;
+        return n - remainder + (remainder < step / 2 ? 0 : step);
+    };
+    ```
+
+    **箭头函数只能使用变量赋值的方式定义**, 若函数体只有一行语句, 可以省略 `{}`, 若参数只有一个, 可以省略 `()`:
+
+    ```js
+    const square = (x) => x * x; // 如果移除了 {} , 则不能显示使用 return 语句
+    ```
+
+在 JavaScript 中, 函数参数都是可选的, 如果函数参数没有指定默认值, 调用的时候也没有传递实参, 那么它的值就是 `undefined`
+
+#### 给参数设置默认值
+
+可以在参数列表中, 使用 `=` 给参数定义默认值
+
+```js
+// 对第二个参数 step 设置默认值
+function roundTo(n, step = 1) {
+    let remainder = n % step;
+    return n - remainder + (remainder < step / 2 ? 0 : step);
+}
+
+console.log(roundTo(4.5));
+// → 5
+console.log(roundTo(4.5, 2));
+// → 4
+```
+
+#### 函数返回值
+
+函数执行完毕后，总会返回一个值。默认情况下，返回值为 `undefined`：
+
+```js
+function doSomething() {
+    console.log('Doing something...');
+}
+
+let result = doSomething();
+console.log(result); // undefined
+```
+
+可以使用 `return` 关键字来指定返回值
+
+**注意**：JavaScript 的函数没有返回类型，因此同一个函数可以根据情况返回不同类型的值
+
+#### 作用域
+
+作用域指的是变量在代码不同部分的可见性和可访问性
+
+在 JavaScript 中，作用域主要分为三种类型：**全局作用域（global scope）**、**局部作用域（local scope）** 和 **代码块作用域（block scope）**
+
+- 全局作用域是 JavaScript 程序中最外层的作用域，在全局作用域中声明的变量叫做全局变量，全局变量可以在声明之后，或者函数和代码块内部进行访问
+
+- 局部作用域是指函数内部的作用区域
+
+- 局部作用域是指代码块作用域，是 ES6 中引入的概念， 代码块是指 `{}` 括起来的代码片段，在代码块中使用 `let`, `const` 定义的变量只能在该代码块内访问
+
+全局变量应谨慎使用，容易产生变量名称冲突，使代码难以维护。
