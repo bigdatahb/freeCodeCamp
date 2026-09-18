@@ -247,6 +247,22 @@ JavaScript 提供了两个字符串方法来判断字符串是否以指定字符
 
 - `string.endsWith(value)`
 
+#### 字符串分割
+
+`split()` 方法可以对字符串进行分割，返回一个字符串数组，基本语法：
+
+```js
+string.split(splitter);
+```
+
+常见的分隔符类型：
+
+- `""` 空字符串，它会将字符串拆分为单个字符的数组
+
+- `" "` 空格，以空格为分隔符对字符串进行分割
+
+- `"-"`，以短杠为分隔符对字符串进行分割
+
 #### ASCII 码和 charCodeAt() 与 fromCharCode()
 
 **ASCII（American Standard Code for Information Interchange，美国信息交换标准代码）**，使用一个字节表示一个字符，能表示 128 个字符，范围： `0 - 127`，意味着最高位固定是 0
@@ -760,3 +776,514 @@ console.log(result); // undefined
 - 局部作用域是指代码块作用域，是 ES6 中引入的概念， 代码块是指 `{}` 括起来的代码片段，在代码块中使用 `let`, `const` 定义的变量只能在该代码块内访问
 
 全局变量应谨慎使用，容易产生变量名称冲突，使代码难以维护。
+
+### Arrays
+
+#### JavaScript 数组的特点
+
+- 使用 `[]` 来创建数组
+
+- JavaScript 中，数组元素可以是 **不同数据类型的值**，数组元素可以是数值、字符串、布尔值、对象或者其他数组
+
+    ```js
+    let arr = [1, 2, 'apple', true];
+
+    console.log(arr);
+    ```
+
+- 数组元素索引从 0 开始
+
+- JavaScript 的数组是动态的，其大小可以在创建后发生改变
+
+    可以使用各种数组相关方法来添加或删除元素，例如 `push()`, `pop()`, `shift()`, `unshift()`, `splice()` 等
+
+- 可以直接为超出数组长度的位置索引直接赋值
+
+    ```js
+    let arr = [1, 2, 'apple', true];
+
+    console.log(arr);
+
+    arr[6] = 'banana';
+    console.log(arr); // [ 1, 2, 'apple', true, <2 empty items>, 'banana' ]
+    ```
+
+    **请务必要防止这种情况发生，有可能会导致意外行为！**
+
+- 访问不存在的元素会返回 `undefined`
+
+    例如数组总共才 5 个元素，但是我访问 `arr[10]`，不会报错，返回的是 `undefined`
+
+- 获取数组长度使用 `length` 属性
+
+    ```js
+    const arr = [1, 2, 3, 4];
+    console.log(arr.length);
+    ```
+
+#### 数组解构
+
+类似 Python 的元组解包操作，JavaScript 为数组提供了解构操作，它是一种便捷的语法特性
+
+```js
+let fruits = ['apple', 'banana', 'orange'];
+
+let [first, second, third] = fruits;
+
+console.log(first); // "apple"
+console.log(second); // "banana"
+console.log(third); // "orange"
+```
+
+数组解构还允许你使用逗号跳过不感兴趣的元素:
+
+```js
+let colors = ['red', 'green', 'blue', 'yellow'];
+let [firstColor, , thirdColor] = colors;
+
+console.log(firstColor); // "red"
+console.log(thirdColor); // "blue"
+```
+
+数组解构的另一个强大功能是能够使用 **默认值**。如果数组元素少于要赋值的变量数量，则可以提供默认值：
+
+```js
+let numbers = [1, 2];
+let [a, b, c = 3] = numbers;
+
+console.log(a); // 1
+console.log(b); // 2
+console.log(c); // 3
+```
+
+---
+
+**剩余元素语法（扩展运算符）**： `...` ，它允许你捕获数组中尚未解构到新数组中的剩余元素
+
+```js
+let fruits = ['apple', 'banana', 'orange', 'mango', 'kiwi'];
+let [first, second, ...rest] = fruits;
+
+console.log(first); // "apple"
+console.log(second); // "banana"
+console.log(rest); // ["orange", "mango", "kiwi"]
+```
+
+剩余元素必须是数组解构模式中的最后一个元素，也就是说 **不能使用** `let [first, ...rest, last] = data;` 这样的语法
+
+根据数组解构的剩余元素语法，我们可以很容易的复制一个数组：
+
+```js
+// 复制数组
+let src = ['apple', 3, 2.98];
+let copy = [...src];
+```
+
+#### 数组相关方法
+
+- `push()` 在数组 **末尾** 添加 **一个或多个** 元素，返回数组的新长度
+
+- `unshift()` 在数组的 **头部** 添加 **一个或多个** 元素，返回数组的新长度
+
+- `pop()` 移除数组的 **最后一个** 元素，并返回该元素，数组长度减一
+
+- `shift()` 移除数组的 **第一个** 元素，并返回该元素，数组长度减一
+
+- `reverse()` 反转数组元素
+
+- `join()` 将数组元素以指定分隔符进行连接
+
+- `indexOf()` 查找指定元素在数组中的第一个位置索引，如果找不到该元素，返回 `-1`
+
+    基本语法：
+
+    ```js
+    // fromIndex 是可选的，默认为 0
+    array.indexOf(element, fromIndex);
+    ```
+
+- `splice()` 一个修改数组非常强大的工具，可以从数组的任意位置添加或删除元素，返回值是从数组中删除的元素所组成的数组，如果没有删除任何元素，则返回一个空数组。**注意**，这个方法会修改原数组
+    - 基本语法：
+
+        ```js
+        // startIndex: 指定修改数组的开始索引
+        // itemsToRemove: 可选参数，指定要删除的元素数量，如果省略 itemsToRemove 参数， splice() 将删除从 startIndex 开始到数组末尾的所有元素
+        // 后续参数 item1, item2, ... 是要添加到数组的元素，从 startIndex 位置开始添加
+        array.splice(startIndex, itemsToRemove, item1, item2);
+        ```
+
+    - 示例：
+
+        ```js
+        let colors = ['red', 'green', 'blue'];
+        colors.splice(1, 0, 'yellow', 'purple');
+
+        console.log(colors); // ["red", "yellow", "purple", "green", "blue"]
+
+        let numbers = [1, 2, 3, 4, 5];
+        numbers.splice(1, 2, 6, 7, 8);
+
+        console.log(numbers); // [1, 6, 7, 8, 4, 5]
+        ```
+
+    - 我们可以使用下标语法来修改数组元素，比如 `arr[1] = "X";`，我们也可以通过 `splice()` 来实现元素的修改：
+
+        ```js
+        // 修改位置 1， 删除 1 个元素，然后在位置 1 添加一个元素 "X"
+        arr.splice(1, 1, 'X');
+        ```
+
+    - 另一个常见用法是删除指定索引位置的元素：
+
+        ```js
+        const fruits = ['apple', 'banana', 'orange', 'mango'];
+        const indexToRemove = fruits.indexOf('orange');
+        if (indexToRemove !== -1) {
+            // 删除 indexToRemove 处的元素
+            fruits.splice(indexToRemove, 1);
+        }
+        ```
+
+    - 清空数组
+
+        ```js
+        // 省略 itemsToRemove 参数，splice() 将删除从 startIndex 开始到数组末尾的所有元素
+        let array = [1, 2, 3, 4, 5];
+        array.splice(0);
+
+        console.log(array); // []
+        ```
+
+- `includes()` 检查数组是否包含某个特定值，返回一个布尔值
+
+    与字符串的 `includes()` 一样，如果只想知道是否包含，而不需要位置信息可以使用这个方法
+
+    基本语法：
+
+    ```js
+    // fromIndex 是可选参数，默认值为 0
+    array.includes(value, fromIndex);
+    ```
+
+#### 数组浅拷贝
+
+浅拷贝是指将基本类型数据进行拷贝，对于引用类型则只拷贝引用值
+
+创建数组浅拷贝的方法有很多种，我们将探讨其中最常用的一些方法： `concat()` ， `slice()` 和 扩展运算符 `...`
+
+- 使用 `concat()` 进行浅拷贝
+
+    ```js
+    const originalArray = [1, 2, 3];
+    const copyArray = [].concat(originalArray);
+
+    console.log(copyArray); // [1, 2, 3]
+    console.log(copyArray === originalArray); // false
+    ```
+
+- 使用 `slice()` 进行浅拷贝
+
+    `slice()` 方法本身是用来对字符串或数组进行切片的，返回切片的新数组
+
+    ```js
+    const originalArray = [1, 2, 3];
+    const copyArray = originalArray.slice();
+
+    console.log(copyArray); // [1, 2, 3]
+    console.log(copyArray === originalArray); // false
+    ```
+
+- 使用 `...` 进行浅拷贝
+
+    ```js
+    const originalArray = [1, 2, 3];
+    const copyArray = [...originalArray];
+
+    console.log(copyArray); // [1, 2, 3]
+    console.log(copyArray === originalArray); // false
+    ```
+
+### Objects
+
+#### 对象的创建与属性访问
+
+在 JavaScript 中，对象是一种基本数据结构，是一种引用类型数据
+
+使用 `{}` 来表示对象，在对象中，以键值对的形式来定义属性：
+
+```js
+const person = {
+    name: 'Alice',
+    age: 30,
+    city: 'New York',
+};
+```
+
+可以通过 `[]` 语法来获取对象的属性值，或者是 `objectName.propertyName` 的方式获取属性值，`[]` 中可以使用 JavaScript 表达式
+
+```js
+console.log(person.name);
+console.log(person['name']);
+```
+
+#### 移除对象的属性
+
+- `delete`
+
+    使用 `delete` 删除对象属性是最直接、最常用的方法
+
+    ```js
+    const person = {
+        name: 'Alice',
+        age: 30,
+        job: 'Engineer',
+    };
+
+    delete person.job;
+
+    console.log(person.job); // undefined
+    ```
+
+- 通过 **解构赋值** 创建新对象来达到删除对象属性的目的（本质上不是删除对象属性，而是创建一个不包含某些属性的新对象）
+
+    ```js
+    const person = {
+        name: 'Bob',
+        age: 25,
+        job: 'Designer',
+        city: 'New York',
+    };
+
+    // 解构赋值
+    const { job, city, ...remainingProperties } = person;
+
+    // { name: "Bob", age: 25 }
+    console.log(remainingProperties);
+    ```
+
+#### 检查一个对象是否具有某个属性
+
+- `hasOwnProperty()` 检查对象是否拥有指定的属性，返回一个布尔值
+
+    ```js
+    const person = {
+        name: 'Alice',
+        age: 30,
+    };
+
+    console.log(person.hasOwnProperty('name')); // true
+    console.log(person.hasOwnProperty('job')); // false
+    ```
+
+- `Object.hasOwn()` 现代推荐的检查对象是否拥有自身属性（而非继承属性）的方法
+
+    可以将其视为 `hasOwnProperty()` 的升级版，更加安全。基本语法是 `Object.hasOwn(object, propertyName)`
+
+    ```js
+    const person = {
+        name: 'Alice',
+        age: 30,
+    };
+
+    console.log(Object.hasOwn(person, 'name')); // true
+    console.log(Object.hasOwn(person, 'job')); // false
+    ```
+
+- `in` 运算符，与 `hasOwnProperty()` 类似。返回一个布尔值
+
+    ```js
+    const person = {
+        name: 'Bob',
+        age: 25,
+    };
+    console.log('name' in person); // true
+    ```
+
+#### 原始数据类型（primitive data types)和非原始数据类型的区别
+
+原始数据类型是 JavaScript 中最简单的数据形式。它们包括 `number`、`bigint`、`string`、`boolean`、 `null` 、 `undefined` 和 `symbol`。这些类型之所以被称为“原始”，是因为它们表示单个值，而不是对象。
+
+**原始值是不可变的！**
+
+当你创建一个具有非原始类型值的变量时，变量中实际存储的是对象在内存中的存储位置的引用，而不是对象本身
+
+#### 函数和对象方法的差异
+
+函数和对象方法都是封装可重用代码的方式，但它们在定义、使用和运行上下文方面存在一些关键差异
+
+- 函数：
+
+    ```js
+    function greet(name) {
+        return 'Hello, ' + name + '!';
+    }
+    console.log(greet('Alice')); // "Hello, Alice!"
+    ```
+
+- 对象方法：
+
+    方法要通过对象才能调用
+
+    ```js
+    const person = {
+        name: 'Bob',
+        age: 30,
+        sayHello: function () {
+            // 方法中可以通过 this 关键字访问当前对象
+            return 'Hello, my name is ' + this.name;
+        },
+    };
+
+    console.log(person.sayHello()); // "Hello, my name is Bob"
+    ```
+
+#### JSON
+
+JavaScript Object Notation （JSON）是一种轻量级的、基于文本的数据格式，常用于服务器和 Web 应用程序之间交换数据。
+
+由于 JSON 与语言无关，您可以轻松地将 JSON 数据从 Java 应用程序发送到 Python 应用程序，或者从 JavaScript 应用程序发送到 C# 应用程序。
+
+JSON 支持多种数据类型，包括 对象、数组、字符串、布尔值、null 和数字。
+
+一个 JSON 示例：
+
+```json
+{
+    "name": "Alice",
+    "age": 30,
+    "isStudent": false,
+    "list of courses": ["Mathematics", "Physics", "Computer Science"]
+}
+```
+
+访问 JSON 对象中的数据：
+
+```js
+// 从文件导入 json
+import data from './example.json' with { type: 'json' };
+
+// 1. 使用 . 访问属性
+console.log(data.age);
+
+// 2. 使用 [] 来访问属性
+console.log(data['list of courses']);
+```
+
+#### JSON.parse() 和 JSON.stringify()
+
+- `JSON.stringify()` 用于将 JavaScript 对象转换为 JSON 字符串
+
+    ```js
+    const user = {
+        name: 'John',
+        age: 30,
+        isAdmin: true,
+    };
+
+    const jsonString = JSON.stringify(user);
+    console.log(jsonString);
+    ```
+
+    `JSON.stringify()` 可以指定第二个参数（可以是一个函数或一个数组），用来指定需要进行字符串化的属性
+
+    ```js
+    const developerObj = {
+        firstName: 'Jessica',
+        isAwesome: true,
+        isMusician: true,
+        country: 'USA',
+    };
+
+    // result: {"firstName":"Jessica","country":"USA"}
+    // 只对 firstName 和 country 属性进行字符串化
+    console.log(JSON.stringify(developerObj, ['firstName', 'country']));
+    ```
+
+    `JSON.stringify()` 还有第三个可选参数 `spacer`，用来指定字符串化结果的间距，例如 `console.log(JSON.stringify(developerObj, null, 2));`
+
+- `JSON.parse()` 将 JSON 字符串转换回 JavaScript 对象
+
+    ```js
+    const jsonString = '{"name":"John","age":30,"isAdmin":true}';
+    const userObject = JSON.parse(jsonString);
+    console.log(userObject);
+
+    // Result:
+    // { name: 'John', age: 30, isAdmin: true }
+    ```
+
+#### 可选链式运算符
+
+可选链式运算符 `?.` 是 JavaScript 的一个实用工具，它允许你安全地访问对象属性或调用方法，而无需担心它们是否存在。
+
+```js
+const user = {
+    name: 'John',
+    profile: {
+        email: 'john@example.com',
+        address: {
+            street: '123 Main St',
+            city: 'Somewhere',
+        },
+    },
+};
+
+console.log(user?.profile?.address?.street); // "123 Main St"
+console.log(user?.profile?.phone?.number); // undefined
+```
+
+通过使用可选链式运算符，我们告诉 JavaScript 仅当对象（或 `?.` 之前的值）存在且不为 `null` 或 `undefined` 时才继续执行操作
+
+如果 `?.` 前面的值为 `null` 或者 `undefined`， JavaScript 将返回 `undefined`，而不是继续执行并抛出错误。
+
+#### 对象解构
+
+- 对象解构一般用法
+
+    ```js
+    const person = { name: 'Alice', age: 30, city: 'New York' };
+
+    const { name, age } = person;
+
+    console.log(name); // Alice
+    console.log(age); // 30
+    ```
+
+- 可以将提取出的值赋给具有不同名称的变量
+
+    ```js
+    let person = { name: 'Alice', age: 30, city: 'New York' };
+
+    let { name: personName, age: personAge } = person;
+
+    console.log(personName); // Alice
+    console.log(personAge); //  30
+    ```
+
+- 对象解构允许设置默认值
+
+    ```js
+    let person = { name: 'Alice', age: 30, city: 'New York' };
+    let { name, age, country = 'Unknown' } = person;
+
+    console.log(country); // Unknown
+    ```
+
+- 嵌套对象的解构
+
+    ```js
+    const recipe = {
+        name: 'Chocolate Cake',
+        ingredients: {
+            flour: '2 cups',
+            sugar: '1 cup',
+        },
+    };
+
+    // Extract `flour` from `ingredients`
+    const {
+        ingredients: { flour },
+    } = recipe;
+
+    console.log(flour); // "2 cups"
+    ```
