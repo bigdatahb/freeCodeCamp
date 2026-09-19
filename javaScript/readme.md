@@ -1184,7 +1184,7 @@ console.log(data['list of courses']);
     console.log(jsonString);
     ```
 
-    `JSON.stringify()` 可以指定第二个参数（可以是一个函数或一个数组），用来指定需要进行字符串化的属性
+    `JSON.stringify()` 可以指定第二个参数（可以是一个函数或一个数组），用来指定需要进行字符串化的属性，`null` 表示不进行自定义
 
     ```js
     const developerObj = {
@@ -1287,3 +1287,72 @@ console.log(user?.profile?.phone?.number); // undefined
 
     console.log(flour); // "2 cups"
     ```
+
+### 循环
+
+#### for 循环
+
+- **C 语言风格 for 循环**
+
+    ```js
+    for (let i = 0; i < 5; i++) {
+        console.log(i);
+    }
+    ```
+
+- **`for ... of ` 循环**
+
+    ```js
+    for (variable of iterable) {
+        // code block to be executed
+    }
+    ```
+
+    数组、字符串都是可迭代对象
+
+- **`for ... in` 循环**
+
+    当您需要遍历对象的属性时，最好使用 `for...in` 循环，此循环将遍历对象的所有可枚举属性，包括继承属性和非数值属性。
+
+    继承属性是指从对象的原型链继承的属性。非数值属性是指既不是数字也不是可以转换为数字的字符串的属性。
+
+    ```js
+    for (variable in object) {
+        // code block to be executed
+    }
+    ```
+
+#### while 和 do while 循环
+
+- while 循环
+
+    ```js
+    while (condition) {
+        // code block to be executed
+    }
+    ```
+
+- `do ... while` 循环
+
+    ```js
+    do {
+        // code block to be executed
+    } while (condition);
+    ```
+
+#### break 和 continue
+
+和 C 语言一样， `break` 用来退出循环； `continue` 用来跳过循环的当前批次，继续下一次循环。
+
+`break` 和 `continue` 语句还可以 **使用标签** 来指定要中断或继续哪个循环。
+
+```js
+outerLoop: for (let i = 0; i < 3; i++) {
+    innerLoop: for (let j = 0; j < 3; j++) {
+        if (i === 1 && j === 1) {
+            break outerLoop; // 直接退出外层循环
+        }
+        console.log(`i: ${i}, j: ${j}`);
+    }
+}
+```
